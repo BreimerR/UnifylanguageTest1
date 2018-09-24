@@ -1,0 +1,62 @@
+class A{
+
+    constructor(){
+
+    }
+}
+
+class __B : A
+
+
+
+class C : D,E,F,    G9;
+
+trait E {
+    private inst
+    private tokendata = [];
+
+    private constructor(){
+
+    }
+
+    public static get instance(){
+        return inst
+    }
+
+    private loop(){
+         for (let name in code.tokens as tokens) {
+            tokendata.push(new RegExp(tokens[name]))
+         }
+    }
+}
+
+class F use E as Play {
+
+}
+
+class G : B ,C
+
+class H extends G
+
+interface I:{
+
+}
+
+interface J{
+
+}
+
+
+interface K: J,I{
+}
+
+class J :: I{
+
+}
+
+class L : A :: J,I{
+
+}
+abstract S{
+
+}

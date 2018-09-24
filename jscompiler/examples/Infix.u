@@ -1,0 +1,10 @@
+class InFix{
+	infix isInstance {
+		return b instanceOf this;
+	}
+
+}
+
+
+InFix.isInstance b;
+

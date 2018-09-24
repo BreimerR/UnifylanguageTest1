@@ -1,0 +1,30 @@
+class Main{
+    // multi  dimensional arguments protection
+    main(String[] args[1][12]){
+
+    }
+
+
+    //object destruction named parameters.
+    //no constants in parameter sections.
+    identification(String firstName:fName,String lastName:lName,Int age:age){
+        // we can only link identifiers at initialization period
+        String firstName : fName = breimer;
+        // This are both similar and should be allowed to be processed as string literals
+        String firstName : fName = "breimer";
+
+        $hello = `$fName is the best`;
+
+        $firstName:$fName = breimer is the best;
+
+    }
+
+
+    // destructing a hash table/json object
+    identifier(Object identification : {String firstName:name,String lastName : lName,Int age = 0}) {
+
+    }
+
+
+
+}

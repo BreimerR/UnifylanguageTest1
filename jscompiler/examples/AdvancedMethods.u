@@ -1,0 +1,36 @@
+class AdvancedMethods{
+     
+}
+
+
+class Person : Human{
+    
+    
+    get String name = fName + lName; 
+     
+    set name(String fullName) -> this[fName,lName] = fullName.split(' ');
+
+    protected age
+
+    get Int age =  age
+    
+    /*
+    *this here refrences the private age
+    * else if there is no private age an
+    * infinite loop will be formed;
+    */
+    
+    Boolean set age(Int age) = this.age = age
+}
+
+class Breimer: Person{
+
+    /* this overides the set age
+    * operation
+    * but the property has to be protected 
+    * thus editable else 
+    * this will lead to  an infinite loop event
+    */
+
+    Boolean set age() = this.age* = 12
+}

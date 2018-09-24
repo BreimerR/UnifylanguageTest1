@@ -1,0 +1,9 @@
+{
+  "language": {
+    "name": "Unify",
+    "root": "unify",
+    "files": [
+      "$root/examples/**/*.u"
+    ]
+  }
+}

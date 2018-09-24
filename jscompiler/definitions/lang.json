@@ -1,0 +1,123 @@
+{
+  "name": "Unify",
+  "extension": "u",
+  "keywords": [
+	"if",
+	"else",
+	"while",
+	"when",
+	"whatIf",
+	"switch",
+	"case",
+	"throw",
+	"new",
+	"elif",
+	"class",
+	"trait",
+	"interface",
+	"implements",
+	"get",
+	"set",
+	"this",
+	"supper",
+	"parent",
+	"instanceOf"
+  ],
+  "operators": [
+	"\\+",
+	"-",
+	"\\*",
+	"\\^",
+	"<",
+	"<<",
+	"<<<",
+	">",
+	">>",
+	">>>",
+	"/",
+	"%",
+	"\\!",
+	"~",
+	"&&",
+	"&",
+	"\\!&&",
+	"\\!||",
+	"=",
+	":",
+	"::",
+	"\\."
+  ],
+  "token": [
+	"\\+",
+	"-",
+	"\\*",
+	"\\^",
+	"<",
+	"<<",
+	"<<<",
+	">",
+	">>",
+	">>>",
+	"/",
+	"%",
+	"\\!",
+	"~",
+	"&&",
+	"&",
+	"\\!&&",
+	"\\!||",
+	"=",
+	":",
+	"::",
+	".",
+	"{",
+	"}",
+	"\\[",
+	"\\]",
+	"\\(",
+	"\\)",
+	"\"",
+	"'",
+	"`",
+	"\\$"
+  ],
+  "tokens": {
+	"IDENTIFIER": "(_)?[a-zA-Z][A-Za-z0-9_]*",
+	"OBJECT_IDENTIFIER": "(_+)?[A-Z][a-zA-Z0-9_]*",
+	"STRING": "(\".*\"|`.*`)",
+	"CHAR": "'.*'",
+	"INTEGER": "(-)?[0-9]+",
+	"DECLARATION": "\\$((_)?[a-zA-Z][A-Za-z0-9_]*)",
+	"EMPTY": ""
+  },
+  "structure": {
+	"colon": ":",
+	"extnd": "(:|extends)",
+	"space": "\\s",
+	"tab": "\\t",
+	"newLine": "\\n",
+	"block": {
+	  "start": "{",
+	  "end": "}"
+	},
+	"function": {
+	  "start": "<objectName>?<space>+<functionArguments>?",
+	  "after": "<codeEnclosure>?"
+	},
+	"if": {
+	  "start": "if(<arguments>|<IDENTIFIER>)",
+	  "after": "(<codeEnclosure>|<statement><terminator>)"
+	},
+	"statement": {
+	  "start": ""
+	},
+	"return": {
+	  "start": "return",
+	  "end": "evaluation<terminator>"
+	},
+	"terminator": {
+	  "start": "<statement>",
+	  "end": "(<>:<;>)"
+	}
+  }
+}

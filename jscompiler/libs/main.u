@@ -1,0 +1,14 @@
+import Object as Any;
+
+func main(String ...args){
+	// we are giving instructions
+	// create an array
+	// then in the array put 1,2,3
+	// but compiler should check datatypes before
+	// creating the datatypes
+
+	Any a[1,2,3];
+	$b[1,2,3];
+	$c =  [1,2,3];
+
+}

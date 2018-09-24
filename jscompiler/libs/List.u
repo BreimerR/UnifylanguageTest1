@@ -1,0 +1,23 @@
+/*
+This is like an array except items here can
+not be repeated
+*/
+class <T> List (private ...items) : Object{
+	init{
+
+		type =  T;
+		for($i = 0;i< items.length,i++){
+			if(items[i] instanceOf T){
+
+			}
+		}
+	}
+
+	set items {
+
+	}
+
+	constructor{
+		age = 12;
+	}
+}

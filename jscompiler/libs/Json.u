@@ -1,0 +1,25 @@
+/*
+	native structure
+	[
+		[key,value]
+	]
+
+	example
+	[
+		["name",[]]
+	]
+*/
+
+class Json : Object {
+
+}
+
+
+// declaring rules for json data
+$age{
+	String age,
+	Int name
+}
+
+age.name =  "Breimer";
+age.year =  12;

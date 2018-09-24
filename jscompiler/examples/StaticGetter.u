@@ -1,0 +1,8 @@
+class A{
+
+	static get name{
+	}
+}
+
+
+log(A.name);

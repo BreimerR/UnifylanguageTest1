@@ -1,0 +1,13 @@
+class A{
+
+    constructor(){
+        /*
+        this evaluates the first section if true then do what comes next
+        */
+
+    if age user = true
+
+     age  then user = true;
+
+    }
+}

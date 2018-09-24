@@ -1,0 +1,14 @@
+class A : B :: C
+    private String name
+
+    public get name
+        return this.name
+
+
+     /*
+     in set name
+     we have to rewrite
+     String name;
+     */
+     set name(name)
+            name = name;

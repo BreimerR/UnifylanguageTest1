@@ -1,0 +1,33 @@
+if(this.name === "breimer"){
+
+}
+
+if(this.lName | this.FName === "Jael"){
+
+}
+
+if(this.lName ===  "Jael"|"Breimer"){
+
+}
+
+
+/*
+if we have a variable search we have to declare the variable
+so that we do not redo the search i.e in this.lName
+we will have
+
+if(this.lName === "Jael"|"Breimer") break
+converted to ->
+this should also cover for function names
+just anything that will require us to re run the code again
+ie getters, setters , functions,class Initializations , arithmetic
+calculations.
+
+$a =  this.lName
+if(a === "Jael"|| a === "Breimer") break
+*/
+
+// this is supposed to be a test for default valued variables
+if(name === default){
+
+}

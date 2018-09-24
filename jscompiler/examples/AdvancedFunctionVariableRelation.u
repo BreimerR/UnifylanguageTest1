@@ -1,0 +1,11 @@
+int age >= 0
+
+// throws an error
+age = -1
+
+func createPerson(name,age>=0){
+	$person = new Person()
+
+}
+
+

@@ -1,0 +1,6 @@
+trait Singleton{
+	private _instance;
+
+	public static this get _instance() => isDefined _instance ? _instance :  _instance = new this();
+
+}

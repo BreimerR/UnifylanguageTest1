@@ -1,0 +1,7 @@
+$name = "Breimer";
+$age = "12";
+$day = 0;
+$month = 1;
+$year =  2018
+$person  = `$name age = $age $date = ${month + 1}-$day-$year`
+$paragraph =  "My name is breimer and I would like to know why this is the $name "

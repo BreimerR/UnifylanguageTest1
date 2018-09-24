@@ -1,0 +1,13 @@
+class PostFix{
+
+	postfix add{
+
+	}
+
+	postfix isInstance{
+		return arg instanceOf this;
+	}
+}
+
+$postfix =  PostFix()
+

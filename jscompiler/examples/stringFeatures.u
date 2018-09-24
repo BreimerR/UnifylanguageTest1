@@ -1,0 +1,111 @@
+class Binary{
+
+
+
+}
+
+
+class Binary[]{
+
+
+
+}
+
+// getters are by default public
+class Char(Binary[] binary){
+	private String case = "Lower" ===  "Upper"|"Lower";
+
+	init{
+		// decides which char we are dealing with or allocating to the memory.
+	}
+
+	toUpperCase{
+		return this.value = isLowerCase ?  when(this.value){
+			'a'=> 'A',
+			'b'=>'B',
+			'c'=> 'C'
+		} : this.value
+	}
+
+	toLowerCase{
+
+	}
+
+	get isLowerCase => case === "Lower";
+
+	get isUpperCase => case === "Upper";
+}
+
+class CharSequence: Char[]{
+
+
+}
+
+class String : CharSequence{
+	prefix uFirst{
+		this[0] = this[0].toUpperCase()
+	}
+}
+
+class Person {
+	private Int age;
+		get => age;
+
+		private set(value){
+
+		}
+
+	private String name;
+		private get => name;
+
+
+}
+class Error;
+
+class ObservableError: Error;
+
+interface Observable{
+	onUpdate() :: __set;
+}
+
+trait Observable : Observable {
+	__set(String name,Object value) {
+		super.__set();
+
+		onUpdate(name,value)
+	}
+}
+
+
+class Worker: Person {
+
+	use Observable;
+
+	private Int energy = 0 updates Supervisor,HumanResource;
+
+	private Boolean hired = false updates HumanResource,Supervisor,Manager;
+
+	fire(Supervisor|Manager by){
+		// calls the others who have not
+	}
+
+
+
+}
+
+class Supervisor{
+
+	fire(Worker worker){
+		// tell you are fired
+		// request for fire documents
+		// tell hr who you fired
+	}
+}
+
+
+$p = new Person();
+
+
+$details = " ${
+// enable running functions inside a string literal
+}"

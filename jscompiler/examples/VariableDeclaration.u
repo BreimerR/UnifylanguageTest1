@@ -1,0 +1,64 @@
+// variables have value eavluation properties
+// this will reduce if else statements
+const age >= 0;
+// customized error messages for attempted set on variables of this kind
+int age1>= 0 throw `Age can not be anything below 0 found $age`;
+//  variable overriding feature to be discusses.
+String ages != ""
+
+class User{
+	private int age
+
+	set age{
+		if(argument > 0){
+			age = argument
+		}else {
+			throw Error("Age has to be greater than zero");
+		}
+	}
+
+}
+
+class User1{
+	private int age >= 0 throw "Age has to be greater than zero"
+
+	// we create an external accessed setter
+	set age{
+		age = argument
+	}
+}
+
+class User2{
+	private int age >= 0 throw "Age has to be greater than zero"
+
+	// we create an external accessed setter
+	set age(this.age)
+}
+
+class User3{
+	int age >= 0 throw "Age has to be greater than zero found $age"
+}
+
+class User4{
+	int age >= 0
+}
+
+class User5{
+	/*
+	 TODO add a method to silence throws or provide a throw handler
+	 if the handler fails then throw the error still or silence the
+	 error all in all.
+	*/
+	$age >= 0
+}
+
+
+$user =  new User();
+user.age = 12;
+// throw error
+user.age = -1;
+
+$user =  new User1();
+user.age = 12;
+// throw same error
+user.age = -1;

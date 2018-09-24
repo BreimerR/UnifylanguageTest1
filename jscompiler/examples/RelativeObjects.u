@@ -1,0 +1,27 @@
+/*
+The concept of realtive objects means that
+when something happens to one object
+then there is  a ripple effect to all the related
+children in the spawned super
+*/
+
+
+class Input{
+	private $value =  "breimer"
+		set -> value = it;
+		get => value;
+}
+
+
+
+class Input{
+	private $value =  "breimer"
+		set String -> onChage{
+
+		}
+
+
+	onChage(){}
+
+
+}

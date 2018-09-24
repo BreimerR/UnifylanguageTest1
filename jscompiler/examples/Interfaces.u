@@ -1,0 +1,20 @@
+/**
+* defines all the private and public properties
+* that a c lass should have on creation
+*/
+interface B{
+    private age,name;
+
+    public space();
+
+}
+
+
+// check if all the required methods have been implemented in the class
+class B :: B{
+    private age,name
+
+    public <returnType> space(){
+
+    }
+}

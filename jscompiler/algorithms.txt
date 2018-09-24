@@ -1,0 +1,9 @@
+get class name
+Get class super class
+Get class traits
+Get class Templates
+
+
+1:check current token if it is class body start or if the the token is an identifier,
+2:if identifier then check if it is trait definition else start new class,
+3:
