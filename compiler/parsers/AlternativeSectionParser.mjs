@@ -1,13 +1,8 @@
 import Parser from "./Parser";
 import ParseSection from "./ParseSection";
-import {isUndefined} from "../../gabbadge/language/helpers";
 
 export default class AlternativeSectionParser extends ParseSection {
     test(tokens) {
-        let {i} = tokens;
-        let {sections} = this;
-
-
         return this.getSection(tokens) !== undefined;
     }
 

@@ -1,9 +1,8 @@
-import {log} from "../../gabbadge/language/helpers";
 
 export default class Splitter {
 
     static split(code) {
-        if (!code) return log("File empty");
+        if (!code) return console.log("File empty");
         if (this.code === code && this.tkns) return this.tkns;
 
         this.code = code;
