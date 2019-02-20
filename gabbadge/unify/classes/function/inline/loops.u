@@ -1,7 +1,0 @@
-inline filter(T[] obj, func(T)=> Boolean) {
-
-}
-
-inline hasItems(T[] obj) => obj.length > 0
-
-inline postfix isDefined (item) 

@@ -1,2 +1,0 @@
-stringParser = (<OpeningQuote>|<BackTick>|<SingleOpeningQuote>)<Token>*<EscapedCharacters> (<OpeningQuote>|<BackTick>|<SingleOpeningQuote>)
-classParser =  (class)<Space><IDENTIFIER><LPARENTHESIS><TOKENS><RPARENTHESIS>

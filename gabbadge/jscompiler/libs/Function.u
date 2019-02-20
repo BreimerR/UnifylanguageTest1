@@ -1,9 +1,0 @@
-class Function : Object{
-	private String $name;
-			$args{};
-
-
-	call(...args){
-		statements.run(this);
-	}
-}

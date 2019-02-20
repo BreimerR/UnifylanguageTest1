@@ -1,6 +1,0 @@
-func name(Int a =  12,Int c = 12){
-
-}
-
-// we get proper named parameters
-name(b = 20,a = 30);

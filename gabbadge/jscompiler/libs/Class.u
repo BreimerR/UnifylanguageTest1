@@ -1,7 +1,0 @@
-class Class : Function{
-
-	// a class can e
-	__call(name,...args){
-
-	}
-}

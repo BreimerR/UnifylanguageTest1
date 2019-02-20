@@ -1,5 +1,0 @@
-class Statement {
-    constructor(string) {
-
-    }
-}
