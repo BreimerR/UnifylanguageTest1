@@ -1,3 +1,0 @@
-class MutableArray  : Array <Object>{
-
-}

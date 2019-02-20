@@ -1,0 +1,29 @@
+class Parser(private const Token[] tokens{
+
+	private EOF = "Unexpected end of file"
+
+	i = 0
+
+	get Token? currentToken  or cT => index < tokens.length ? tokens[index] : null
+
+	incrementIndex -> index += 1
+
+	consumeToken : throws{
+		isNull currentToken -> throw EOF
+		incrementIndex();
+	}
+
+	parseExpressions{
+		token  = isNull currentToken -> throw EOF
+
+		Expression expr;
+
+		return when (token){
+			isNumber => consumeToken ,
+			isLeftParen ->{
+				expr
+			}
+
+		}
+	}
+}

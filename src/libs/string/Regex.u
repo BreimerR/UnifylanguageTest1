@@ -1,26 +1,14 @@
-export default class Regex {
-    constructor(regex = '', flag = '') {
-        this.flag = flag;
-        this.regex = regex;
-    }
+class Regex (public flag = '',public regex = ''){
 
-    add(...regex) {
-        this.combine(...regex)
-    }
+    test(string, flag) => new RegExp(this.regex, this.flag).test(string)
 
-    addGroup(name, ...regex) {
-
-    }
-
-    test(string, flag) {
-        return new RegExp(this.regex, this.flag).test(string)
-    }
 
     exec(string) {
-        return new RegExp(this.regex, this.flag).exec(string)
+
     }
 
-    combine(...regex) {
+
+    combine aka add(...regex) {
         this.regex = Regex.combine(...[this.regex, ...regex]);
     }
 
@@ -42,11 +30,12 @@ export default class Regex {
     }
 
     static group(...regex) {
-        let g = "(", i = 0;
+        $g = "("
+        $i = 0
 
         for (; i < regex.length; i++) {
-            let exp = regex[i];
-            exp = Regex.source(exp);
+            $exp = regex.i;
+            exp = Regex.source exp;
             g += exp;
 
             if (!(i === regex.length - 1)) g += `|`;
@@ -96,7 +85,7 @@ export default class Regex {
         return new RegExp(`[` + this.sectionContent(section) + this.source(addition) + `]`)
     }
 
-    static source(regx) {
+    static prefix source(regx) {
         return regx instanceof RegExp ? regx.source : regx;
     }
 

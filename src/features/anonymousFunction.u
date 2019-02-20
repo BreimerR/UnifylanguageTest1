@@ -1,0 +1,8 @@
+$name = /*Anonymouse functions*/
+$age =  /*Object Declaration*/
+/*literal declarations*/
+$name =  12
+/*method call*/
+$spades = Cards.spades()
+/*getter call */
+$cards =  Cards.shufle

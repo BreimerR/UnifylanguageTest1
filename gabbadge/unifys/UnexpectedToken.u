@@ -1,0 +1,17 @@
+class UnexpectedToken : Error {
+	constructor(Object object{cT,column = col ,line}, expected = "",before = ""){
+		$spaceN = {}
+
+		try{
+			more =  `after ${object.prevToken}`
+		}
+
+		spaceN["space or new Line $more"] = /[\s\n]/
+
+		spaceN.tab = /\t/
+
+		for spaceN as key: val if value.test(cT) cT = key;
+
+		super(`Unexpected token $cT at line $line column $column ${column} ${isEmpty before ? "" : "\nbefore " + before} ${isEmpty expected ? "" : "\nExpected " + expected}`)
+	}
+}

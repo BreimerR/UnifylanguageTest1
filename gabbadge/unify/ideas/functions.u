@@ -1,0 +1,43 @@
+/*This are the function types that exist*/
+
+printLln(Integer a) {
+
+}
+
+printLn(String b){
+
+}
+
+infix add(String a, Int b){
+
+}
+
+multiply(Array inputs...){
+	$example =  [
+		1 2, 2 3
+	]
+
+	$example1 = [
+	  1 2, 2 3
+	]
+}
+
+infix each(Function func,iterable){
+
+}
+
+
+$b = [1,2,3]
+
+log each b
+
+
+/*
+expected a log of
+1
+2
+3
+*/
+
+
+

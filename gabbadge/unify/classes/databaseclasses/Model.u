@@ -1,0 +1,105 @@
+trait Singleton {
+
+	private interface constructor()
+
+	private Object instance?
+		get{
+			isNull instance -> instance = new self
+
+			return instance
+		}
+}
+
+
+class Connection{
+
+	use Singleton
+
+	DbConnection? conn;
+
+	PDOException e;
+
+	String _constrains
+
+	String? error;
+
+	Int? errorCode;
+
+	constructor(host = "localhost:127.0.0.1:8080" ,userName = "root", password = ""){
+		try{
+			conn = new PDO(host,userName,password)
+		}catch(PDOException e){
+			this.e = e
+
+			error =  e.message
+		}
+	}
+}
+
+
+/**
+*
+**/
+class Model {
+	// initialize a connection
+
+	use Singleton;
+
+	Object values[];
+
+	// handles database query and connections errors.
+	String dbError
+
+	String sql
+
+	pdoDB = Connection.getInstance
+
+	constructor(){
+
+	}
+
+	// Object to mean we will to string it all
+	prepSql(String action,String table, Object[] items){
+
+	}
+
+	/**
+	* This is hard to be done !!
+	* A class method is just converted into an actual
+	* function and is not searched for during run time
+	* we can have such classes but it would create
+	* runtime drags we can put in optimization sections
+	* this will cause a search request slow for run time
+	**/
+
+	__call(String queryName,Object[] args){
+		// check function name
+		// prepare the statement action to be carried out
+		// parse the statement
+
+		values = []
+
+		error = ""
+
+		prepSql(
+			functionName,queryName,
+			isSet args[2] ? args[2] : []
+		)
+
+		_constrains = isSet args[3] ? args[3] : null
+
+		// Use the default value in such evaluations to have static type forms
+		where = isSet args[1] ? args[1] : []
+
+		queryName == "update" => prepare(queryName, where, items)
+
+		if (queryName == "select" || queryName == "delete" || queryName == "insert") {
+			return prepare(queryName, where);
+		} else {
+			// TODO 'Check if is admin and allow to do more actions';
+			return false;
+		}
+
+	}
+
+}

@@ -1,0 +1,16 @@
+// This is an if that is mimiks the structure of a function
+
+
+// example
+
+$permission =  false
+
+setName(){}
+
+throwError {throw "Unable to set the name user not allowed to use this function"}
+if (permision,setName,throwError)
+
+permision ? setName : throwError
+
+// decide on which looks better
+if (permision,setName,throwError)

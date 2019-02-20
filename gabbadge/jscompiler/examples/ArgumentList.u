@@ -1,0 +1,146 @@
+func a(String name){;
+
+}
+
+func b({name,age,spades}){
+	// we can use name  age or spades separately
+}
+
+
+
+func c(String ...args){
+	// this type args means that all the arguments that
+	// are provided are supposed to be strings.
+}
+
+func  e(name,Int age,year) String {
+	// This means that the args with no type are all strings
+}
+
+
+func  f(...args) Int[] {
+	// this means that all arguments passed into this function
+	// are supposed to all be of type Int[]
+}
+// same format just different methods of organization.
+func   g(Int[] ...args){
+	// this means that all arguments passed into this function
+	// are supposed to all be of type Int[]
+}
+
+func h(String names,Int[]...args,String name){
+	// this is when we have a multiple of args
+}
+
+// this feature will be difficult to implement but with benefits
+// used for compile time check
+func i(function(Int a ,Int b):ReturnType,String age){
+
+}
+// used in compile time check to show that the function that returns nothing.
+func j(function(Int a ,Int b),String age){
+
+}
+// used to indicate that the function must return something just not nothing.
+func k(function(Int a ,Int b): Any|Object,String age){
+
+}
+
+// Or arguments.
+func l(sex =  "male" == "male"|"female"|"bisexual"){
+	// this shows that the arg sex can only take male,female,bisexual and no other but male is the default
+}
+
+// argument validator function could also be a nice twist in things
+// this is when u just want to have a specific arguments passed else this will
+// throw an error of unexpected type from the function
+// thus the error is a derivedFunctionError
+// but since we know the error is there we are not
+// required to put it there as a requirement.
+// provide a value to the
+func m(sex = "male" == validateSexualOrientation):DerivedFunctionError{
+	// this is similar to function m but then we are saying that
+	// we pass the validator section on to a  more sophisticated function that can throw more
+	// sensible errors than what we have
+}
+// should mean the same thing
+func n(sex = validateSexualOrientation,age > 0){
+	// this type of function means that the parameter age can not take anything that is below zero
+	// but not zero
+}
+
+// != 'kenya' means that the argument can be any other string but not that one
+// != /[a-zA-Z]/
+// = /[a-zA-Z]/ this will reduce the number of if tests that are supposed to be there
+// i a programing language
+// making it easier to know what we need
+func o(obj{name ,age,location != "kenya"}){
+
+}
+//TODO look into section specific regex errors i.e
+/*
+in /<day>[0-9]{2}-<month>[0-9]{2}-<year>[0-9]{4}/s
+we should be able to throw an error at day
+this means that the s specified at the end of the the section
+is what will throw the error that means that the regex is in strict mode
+and when content in the string does not reflect what is required and error
+is raised
+*/
+// comparison operators in the argument section
+func p(year == /(?<day:"Day was wrong">^([0-9]|[1][0-9]|[2][0-9]|[3][0-1])$)-(?<month:"Error required">[0-12])-(?<year:"Required year specification">[0-9]{4})/s){
+	// this means that the variable year can take year in the specified format
+	// and we also want to have named groups therefor we can use day as it is i.e
+	if(day < 20){
+		throw new Error("Month is not yet there for payment")
+	}
+}
+
+// this rests all arguments passed to be of for provided before allocating memory
+// to the content
+func q(...args == /[a-zA-z]*/:"Arg has to be of required type"){
+
+}
+
+// destructing args
+func r(Person person:{name == /[A-Z][a-z]+/:"Error on fail",age > 0 :"Division by zero"}){
+	// this means that the object passed is of the specified format
+	// we could also have also default values in destructing sections
+}
+
+
+// This means that the divider can be anything but zero
+func s(Int divisible,Int divider != 0:"Division by zero"){
+
+}
+
+func t(Int[] year == [day > 0 ,month > 0,year > 2014]){
+
+}
+
+// This means do u then pass what it returns to t then return what t returns.
+func u -> t (String year == /(?<day:"Day was wrong">[1-7])-(?<month:"Error required">[0-9]{2})-(?<year:"Required year specification">[0-9]{4})/s) => [day,month,year].map(parseInt);
+
+// This means that this function takes.
+// The order in which the items are passed should not be passed as required.
+// func v <- v(name,...argsForU,age)
+// both this will have the same concept
+// func v <- v(name,age,...argsForU)
+func v <- u(...argsForU,name,age)
+// this function only takes tha argument names and order of another functions
+func w : x(){
+
+}
+// this is a grouped parameter type where we can destruct the items
+// as required instead of writing the same function again.
+func y((name,year,age|{name,year,age})){
+
+}
+// this means that
+// name has a default value of undefined or null depending on what null or undefined will be
+// mean in the language
+func z(name?,age){
+	// thus we have to test the value
+	if(name == null){
+
+	}
+}

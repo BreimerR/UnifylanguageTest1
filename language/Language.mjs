@@ -1,88 +1,64 @@
-import Splitter from "./lexer/Spliter";
-import Space from "../unify/parse/tokens/Space";
-import Tab from "../unify/parse/tokens/Tab";
-import NewLine from "../unify/parse/tokens/NewLine";
-import {isDefined, log} from "./helpers";
-import UnexpectedToken from "../unify/parse/exceptions/UnexpectedToken";
+/*
+* scanner
+* lexical analysis
+*
+* */
+
+import Splitter from "./parsers/Splitter";
+import {Tokens} from "./ast/Tokens"
+
 
 export default class Language {
-    constructor(code, definitions) {
+    /*
+    * consider taking in the main file for a full on
+    * compiler
+    * */
+    constructor(code, fileName, ...parsers) {
+        this.tokens = this.tokenize(code);
+        this.fileName = fileName;
         this.code = code;
-        this.definitions = definitions;
-        this.index = -1;
-        this.line = 1;
-        this.col = 0;
-        this.tokenTypes = [];
         this.ast = [];
-        this.parsers = [];
-    }
-
-    get tokenize() {
-        if (!!this.code && this.code.length) {
-            this.tokens = Splitter.split(this.code);
-            this.considerSpaces = true;
-
-            this.organize;
-            return true;
-        }
-
-        return false;
-    }
-
-    get parser() {
-        let parsers = this.parsers;
-
-        for (let parser of parsers) {
-            if (parser.shouldParse(Object.create(this))) {
-                return new parser(this);
-            }
-        }
-
-
-        throw new UnexpectedToken(this)
-    }
-
-    get organize() {
-        let types = this.tokenTypes, tokens = this.tokens;
-
-        let i = 0;
-        for (let token of tokens) {
-            // sort items into proper tokens
-            for (let type of types) {
-                if (type.isValid(token)) this.tokens[i] = new type(token);
-
-            }
-            i++;
-        }
-
+        this.parsers = parsers;
     }
 
 
-    get nextToken() {
+    /*
+     * because js supports string reading we should
+     * use string checks instead of char reads
+     *
+     * other tokenizer's rely on the reading
+     * of chars per chars and forming what
+     * is required form a char string sequence
+     * */
 
-        this.prevToken = this.cT;
-        this.prevIndex = this.index;
-        this.index += 1;
-        let token = this.tokens[this.index];
+    /**
+     *
+     * @param  code String
+     * @return Tokens
+     * */
+    tokenize(code) {
+        // return new Code(Splitter.split(code));
+    }
 
-        if (!this.endOfFile) {
-            if (token.is(NewLine)) {
-                this.line += 1;
-                this.col = 0;
-            }
+    compile() {
+        throw new Error("Language must define the actions of this function")
+    }
 
-            if (isDefined(this.prevToken)) {
-                this.col += this.prevToken.token.length;
-            }
+    /**
+     * request the next valid parser from
+     * available parsers by calling Parser.shouldParse(tokens.copy)
+     * */
+    static get parser() {
+        let {tokens} = this, parser;
 
-            return this.cT = this.considerSpaces ? token : (token.is(Space, Tab, NewLine) ? this.nextToken : token)
-        }
+        this.parsers.forEach(p => {
+            if (p.shouldParse(tokens)) parser = p
+        });
 
-        return null
+        return parser;
     }
 
 
-    get endOfFile() {
-        return this.index > this.tokens.length - 1;
-    }
 }
+
+Language.parsers = [];

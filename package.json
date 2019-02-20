@@ -1,0 +1,20 @@
+{
+  "name": "unify",
+  "version": "1.0.0",
+  "description": "Compiler",
+  "main": "index",
+  "dependencies": {
+    "inquire": "^0.4.8",
+    "commander": "latest"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "/unify.mjs"
+  },
+  "author": "Breimer John",
+  "license": "ISC",
+  "bin": {
+    "creator": "./index.js"
+  }
+}
+echo \"Error: no test specified\" && exit 1

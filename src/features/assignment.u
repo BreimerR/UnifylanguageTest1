@@ -1,0 +1,10 @@
+class A{
+	private String name
+
+	// Redundant in nature
+	set name (this.name)
+
+	// whatever we return here is what becomes name
+	set name(name) => isValid name ? name : throw "Invalid Name set"
+
+}

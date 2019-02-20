@@ -1,0 +1,29 @@
+/**
+* Switch structure is
+* return? switch on infixFunction| default (==) {
+*
+* }
+
+* the example body provided my or may not have
+* a body if it is in a single line expression
+* in such a case it would mean we have end of line deliminator
+* or we have a body start definition and end which could be the natural : and end ;
+*
+*/
+
+class Parser{
+	makeSection(possibleSection){
+		switch possibleSection instanceOf {
+			Token {
+
+			}
+			ParseSection {
+
+			}
+
+			default {
+
+			}
+		}
+	}
+}

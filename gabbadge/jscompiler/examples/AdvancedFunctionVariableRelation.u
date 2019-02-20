@@ -1,0 +1,11 @@
+int age >= 0
+
+// throws an error
+age = -1
+
+createPerson(name,age>=0){
+	$person = new Person()
+
+}
+
+

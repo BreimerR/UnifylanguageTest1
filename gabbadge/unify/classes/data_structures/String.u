@@ -1,0 +1,35 @@
+/*
+* Calling a supper class should not be a must if we want to get rid of
+* some of the overheads
+*/
+class String(Char chars...): CharSequence(chars){
+
+	// operator works if it is between string and a string
+	// we meet such an action we check the class to
+	// first to see what we are supposed to doo with
+	// the operator
+	// else we check the runtime for action operation
+	// has to return ir code
+	infix operator + {
+
+	}
+
+	infix operator - {
+
+	}
+
+	infix operator / {
+
+	}
+
+	infix operator * {
+
+	}
+
+
+}
+
+
+
+
+

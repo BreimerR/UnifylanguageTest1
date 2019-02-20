@@ -1,0 +1,52 @@
+class A{
+	init{
+		/*
+		default value at declaration
+		means every time we try and set the value and the value fails
+		we default to this value
+		*/
+
+		$url: ["Home","index"] validateUrlArr, actionOnValidationFailure = Url.parse $_GET.url
+
+		$controller = Controller.exists url.0 ? new url.0() : new Home()
+
+		$view:"index" validateView,actionOnViewValidateFail = url.1
+		$a = +10
+		$b = -200
+		$c =+10E14
+		$d = -F
+
+
+	}
+	// much bulky init
+	init2{
+
+		$url: ["Home","index"] {
+			// validation of emptiness and comparisons or action to be
+			// executed in order to end up at acceptable value
+			/*
+			what to doo on defaulting
+            if this section is not defined then we just default and
+            forget about the variable and it's state
+
+			*/
+			addError("No valid url set")
+		} , {
+			// code for failed assignment
+		}= Url.parse $_GET.url
+
+
+	}
+
+	private prefix actionOnValidationFailure Array parsedUrl as url -> addError "No proper url found ${$_GET.url}"
+
+
+
+	addError(String msg,Int level as errorLevel = 1){
+
+	}
+
+	private prefix addError msg -> addError(msg)
+
+}
+

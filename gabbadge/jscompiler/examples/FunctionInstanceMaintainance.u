@@ -1,0 +1,15 @@
+class Parser{
+    static nextToken(tokens = [],i){
+		 if (i < tokens.length) {
+
+
+				// function variable in this case is  the same function
+				// but we are changing the function variable alone
+				// then we are re calling the same functino
+				function.i =  i;
+				return /[\s\t\n]/.test(token) ? function.run() : token;
+			}
+
+			return null;
+    }
+}

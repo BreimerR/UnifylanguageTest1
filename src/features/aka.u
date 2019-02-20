@@ -1,0 +1,20 @@
+class Regex{
+
+	add(...rgxS){
+		combine(...rgxS)
+	}
+
+	combine(...rgxS){
+		// code here
+	}
+}
+
+class RegexSimplified{
+	// allows for easier function rename without code change
+	combine aka add (...rgxS){
+		// code here
+	}
+
+
+}
+

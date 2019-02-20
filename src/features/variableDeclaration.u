@@ -1,0 +1,33 @@
+$a,b:'' = 12,c
+String a
+String b
+Char c: 'c'
+Char d: 'd'
+Char a: /^[a-d]$/
+Char v: validateV
+Int d: d + 10 <= 100
+Char z = 'c'
+Boolean | Int a: /[0-1]/, true | false
+$p = new Person()
+${name} = p
+Int {age} = p
+
+/**
+Declaration
+	(Dollar| Type{Pipe}) (Identifier Default? Assignment?){Comma} SEMIColon?
+		Type
+			Identifier typeParameters
+				typeParameters
+					LessThan Identifier{Comma} GreaterThan
+		DeclarationIdentifierStart
+			Dollar
+		Default
+			DefaultValue{Comma}
+				DefaultValue
+					(Regex|Literal|Identifier|Expression)
+		Assignment
+			("by" Identifier| Equals expression)
+
+ Full Declaration
+	(Dollar| (Identifier (LessThan Identifier{Comma} GreaterThan)){Pipe}) (Identifier (((Regex|Literal|Identifier|Expression)){Comma})? ("by" Identifier| Equals expression)?){Comma} SEMIColon?
+*/
