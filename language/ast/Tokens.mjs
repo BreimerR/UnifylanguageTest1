@@ -31,10 +31,16 @@ export class Tokens {
      * does not consider spaces as valid token until
      * an actual token is discovered.
      * */
+
+    /**TODO
+     * logic does not add up.
+     *
+     * */
     get hasValidToken() {
         let tokens = this.copy;
-        tokens.safe = true;
 
+        let {safe} = tokens;
+        tokens.safe = true;
         for (let token of tokens) {
             if (!token.isEither(NewLine, Space, Tab)) {
                 tokens.safe = false;
@@ -42,7 +48,8 @@ export class Tokens {
             }
         }
 
-        tokens.safe = false;
+        //restore safety.
+        tokens.safe = safe;
         return false;
     }
 
