@@ -13,5 +13,4 @@ export default class Token extends LanguageToken {
         return this.rgx.test(tkString)
     }
 
-
 }
