@@ -6,6 +6,7 @@ import EndOfLineParser from "./EndOfLineParser";
 import VariableDeclaration from "../ast/statements/VariableDeclaration";
 import ParseSection from "../../gabbadge/ParseSection";
 import SimpleVariableDeclaration from "../ast/statements/SimpleVariableDeclaration";
+import SColon from "../tokens/characters/SColon";
 
 /**SimpleVariableDeclaration
  * $a = 12
@@ -44,7 +45,7 @@ SimpleVariableParser.considerSpaces = false;
 SimpleVariableParser.defSections(
     new AlternativeSectionParser(Identifier, Dollar),
     Identifier,
-    new EndOfLineParser()
+    SColon
 );
 
 SimpleVariableParser.thresholdIndex = 3;

@@ -153,7 +153,9 @@ export default class Unify extends Language {
 
 
             this.ast.push(parser.parse(tokens));
-            console.log(this.ast);
+
+            console.log(tokens.nextToken);
+            break;
 
 
 
@@ -232,4 +234,3 @@ Unify.tokens = [
     Underscore,
     UnifyNumber
 ];
-
