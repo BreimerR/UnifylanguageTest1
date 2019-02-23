@@ -15,26 +15,22 @@ import Token from "../tokens/Token"
  * one after the other in that order
  * */
 export default class Parser extends LanguageParser {
-
-
-    static [Symbol.iterator](){
-        return this
-    }
-
-    static next(){
-        return {
-            value:this.parseSections[++this.i],
-            done:!(this.i < this.parseSections.length)
-        }
-    }
-
     static parse(tokens) {
-
+        let {considerSpaces, safe} = tokens;
+        tokens.considerSpaces = this.considerSpaces;
+        tokens.safe = this.safe;
+        let stmnt = new this.statement();
+        stmnt.claimTokens(this.consumeTokens(tokens));
+        tokens.considerSpaces = considerSpaces;
+        tokens.safe = safe;
+        return stmnt;
     }
 
-    static consumeTokens(tokens) {
+    static consumeTokens(tokens, sections = this.parseSections) {
         let consumed = [];
-        for (let section of this) {
+        sections = sections[Symbol.iterator]();
+
+        for (let section of sections) {
             if (section instanceof Parser) {
                 consumed.push(section.consumeTokens(tokens))
             } else {
@@ -50,7 +46,6 @@ export default class Parser extends LanguageParser {
     }
 
 
-
     // this are the section that are required to get a valid parser
     // this are the section that are required to get a valid parser
     static get parseThresholdSections() {
@@ -58,35 +53,42 @@ export default class Parser extends LanguageParser {
     }
 
     static shouldParse({copy: tokens}) {
-        let bool;
+        let bool, {considerSpaces} = tokens;
+
         tokens.considerSpaces = this.considerSpaces;
 
         let sections = this.parseThresholdSections;
 
         for (let i in sections) {
             let section = sections[i];
-            let test = section instanceof Parser ? section.test(tokens) : (tokens.hasValidToken ? tokens.nextToken.is(section) : false);
+            let test = section instanceof Parser ? section.test(tokens) : (tokens.hasRemTokens ? tokens.nextToken.is(section) : false);
 
             bool = bool === undefined ? test : bool && test
         }
 
-        tokens.considerSpaces = true;
+        tokens.considerSpaces = considerSpaces;
 
         return bool;
     }
 
-    test(tokens) {
+    test(tokens, sections = this.constructor.parseSections) {
         let bool;
-        let sections = this.constructor.parseSections;
 
         for (let i in sections) {
             let section = sections[i],
-                test = section instanceof Parser ? section.test(tokens) : (tokens.hasRemTokens ? tokens.nextToken.is(section):false);
+                test = section instanceof Parser ? section.test(tokens) : (tokens.hasTokens ? tokens.nextToken.is(section) : false);
+
+            // exit on a single item failure
+            if (test === false) return false;
 
             bool = bool === undefined ? test : bool && test
         }
 
         return bool;
+    }
+
+    consumeTokens(tokens, sections) {
+        return this.constructor.consumeTokens(tokens, sections)
     }
 }
 

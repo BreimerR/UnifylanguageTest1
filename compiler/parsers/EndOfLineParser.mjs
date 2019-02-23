@@ -1,11 +1,11 @@
 import Parser from "./Parser"
-import Identifier from "../tokens/identifiers/Identifier"
-import Keyword from "../tokens/identifiers/Keyword"
-import OneOrManyParseSection from "./OneOrManyParseSection"
-import NewLine from "../tokens/characters/NewLine"
 import SColon from "../tokens/characters/SColon"
 import AlternativeSectionParser from "./AlternativeSectionParser";
+import OptionalParser from "./OptionalParser";
+import EndOfFile from "../tokens/characters/EndOfFile";
 import ParseSection from "./ParseSection";
+import NewLine from "../tokens/characters/NewLine";
+import OneOrManyParseSection from "./OneOrManyParseSection";
 
 /**
  * Type Name
@@ -20,27 +20,12 @@ import ParseSection from "./ParseSection";
 
 
 export default class EndOfLineParser extends Parser {
-    test(tokens) {
-        let {safe,considerSpaces} = tokens;
-        tokens.safe = true;
-        tokens.considerSpaces = true;
-        let test = super.test(tokens);
-        tokens.safe = safe;
-        tokens.considerSpaces = considerSpaces;
-        return test;
-    }
 
-    consumeTokens() {
-
-    }
 }
 
+EndOfLineParser.considerSpaces =  false;
 
 EndOfLineParser.defSections(
-    new AlternativeSectionParser (
-        SColon,
-        new ParseSection(
-            new OneOrManyParseSection(NewLine), new AlternativeSectionParser(Keyword, Identifier)
-        ),
-    )
+    new OptionalParser(new OneOrManyParseSection(NewLine)),
+    EndOfFile
 );

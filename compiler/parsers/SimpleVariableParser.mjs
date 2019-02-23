@@ -3,9 +3,14 @@ import AlternativeSectionParser from "./AlternativeSectionParser";
 import Identifier from "../tokens/identifiers/Identifier";
 import Dollar from "../tokens/characters/Dollar";
 import EndOfLineParser from "./EndOfLineParser";
-import VariableDeclaration from "../ast/statements/VariableDeclaration";
 import SimpleVariableDeclaration from "../ast/statements/SimpleVariableDeclaration";
 import SColon from "../tokens/characters/SColon";
+import Token from "../tokens/Token";
+import NonConsumeParseSection from "./NonConsumeParseSection";
+import OptionalParser from "./OptionalParser";
+import EndOfFile from "../tokens/characters/EndOfFile";
+import OneOrManyParseSection from "./OneOrManyParseSection";
+import NewLine from "../tokens/characters/NewLine";
 
 /**SimpleVariableDeclaration
  * $a = 12
@@ -26,17 +31,9 @@ import SColon from "../tokens/characters/SColon";
  * */
 
 export default class SimpleVariableParser extends Parser {
-    static parse(tokens) {
-        let {considerSpaces, safe} = tokens;
-        tokens.considerSpaces = this.considerSpaces;
-        tokens.safe = this.safe;
-        let stmnt = new this.statement();
-        stmnt.claimTokens(this.consumeTokens(tokens));
-        tokens.considerSpaces = considerSpaces;
-        tokens.safe = safe;
-        return stmnt;
-    }
+
 }
+
 SimpleVariableParser.statement = SimpleVariableDeclaration;
 
 SimpleVariableParser.considerSpaces = false;
@@ -44,9 +41,8 @@ SimpleVariableParser.considerSpaces = false;
 SimpleVariableParser.defSections(
     new AlternativeSectionParser(Identifier, Dollar),
     Identifier,
-    SColon
+    new OptionalParser(SColon),
+    new OptionalParser(new OneOrManyParseSection(NewLine)),
+    new OptionalParser(EndOfFile)
 );
-
-SimpleVariableParser.thresholdIndex = 3;
-
 

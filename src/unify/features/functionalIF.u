@@ -5,7 +5,7 @@
 
 $permission =  false
 
-setName(){}
+setName{}
 
 throwError {throw "Unable to set the name user not allowed to use this function"}
 if (permision,setName,throwError)

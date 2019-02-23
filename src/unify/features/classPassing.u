@@ -1,0 +1,42 @@
+class Token{
+}
+
+class Language(code,Class<? : Parser> ...parsers){
+}
+
+class ParseSection : Parser
+
+class OptionalSectionParser : ParseSection
+
+class AlternativeSectionParser : ParseSection
+
+class NonParseSection : ParseSection
+
+class VariableDeclarationParser : Parser {
+	static ParseSection|Token sections[
+		new AlternativeSectionParser(Identifier,Dollar),
+		Identifier,
+		new OptionalSectionParser(SColon),
+		new NonParseSection(Token),
+		new OptionalSectionParser(EndOfFile)
+	]
+
+}
+
+class Unify(String code) : Language{
+	private String tokens[] =  Splitter.split(code)
+
+	init{
+		super(code,VariableDeclarationParser)
+	}
+
+}
+class Identifier : Token{
+	static regex = //
+}
+
+class Dollar : Token{
+}
+
+class EndOfFile : Token{
+}

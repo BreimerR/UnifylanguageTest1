@@ -82,6 +82,7 @@ export default class Unify extends Language {
          * language specific tokens
          * */
 
+        if (code.length < 1) return new Tokens([]);
         code = Splitter.split(code);
 
         let line = 1, row = 1;
@@ -152,16 +153,12 @@ export default class Unify extends Language {
             if (parser === undefined) throw new UnifySyntaxError(tokens.currentToken);
 
 
-            this.ast.push(parser.parse(tokens));
-
-            console.log(tokens.nextToken);
-            break;
-
-
 
             // reset value to new tokens check
             hasValidToken = tokens.hasValidToken;
         }
+
+        console.log(this.ast);
         // console.log(this.ast)
         // TODO semantic analysis
         // TODO code optimization

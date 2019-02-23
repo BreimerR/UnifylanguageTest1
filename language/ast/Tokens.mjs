@@ -57,6 +57,13 @@ export class Tokens {
         return this.i < this.tokens.length;
     }
 
+    get hasTokens() {
+        let {copy} = this;
+        copy.considerSpaces =  true;
+        copy.safe= true;
+        return this.copy.nextToken !== undefined;
+    }
+
     each(fn) {
         for (let token of this) {
             fn(token, this.i)
@@ -94,8 +101,6 @@ export class Tokens {
     }
 
     get futureToken() {
-        let {copy: tokens} = this;
-
         return this.copy.nextToken
     }
 

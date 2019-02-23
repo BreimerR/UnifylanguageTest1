@@ -3,17 +3,22 @@ import ParseSection from "./ParseSection";
 
 export default class AlternativeSectionParser extends ParseSection {
     test(tokens) {
-        return this.getSection(tokens) !== undefined;
+        let section, {safe} = tokens;
+        tokens.safe = true;
+        section = this.getSection(tokens);
+        let test = section !== undefined;
+        //console.log(section);
+        tokens.safe = safe;
+        return test;
     }
 
     getSection(tokens) {
         let {sections} = this;
-
         let {i} = tokens;
 
         for (let index in sections) {
             let section = sections[index];
-            let test = section instanceof Parser ? section.test(tokens) : (tokens.hasValidToken ? tokens.nextToken.is(section) : false);
+            let test = section instanceof Parser ? section.test(tokens) : (tokens.hasTokens ? tokens.nextToken.is(section) : false);
 
             if (test) {
                 return section
@@ -30,11 +35,7 @@ export default class AlternativeSectionParser extends ParseSection {
         let sec;
 
         if (section instanceof Parser) {
-            if(!Array.isArray(sec)){
-
-            }else sec =[];
-
-            sec.push(section.consumeTokens(tokens))
+            sec = section.consumeTokens(tokens);
         } else sec = tokens.nextToken;
 
         return sec;
