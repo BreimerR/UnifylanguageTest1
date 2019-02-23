@@ -2,15 +2,13 @@ import Parser from "./Parser";
 import AlternativeSectionParser from "./AlternativeSectionParser";
 import Identifier from "../tokens/identifiers/Identifier";
 import Dollar from "../tokens/characters/Dollar";
-import EndOfLineParser from "./EndOfLineParser";
 import SimpleVariableDeclaration from "../ast/statements/SimpleVariableDeclaration";
 import SColon from "../tokens/characters/SColon";
-import Token from "../tokens/Token";
-import NonConsumeParseSection from "./NonConsumeParseSection";
 import OptionalParser from "./OptionalParser";
 import EndOfFile from "../tokens/characters/EndOfFile";
 import OneOrManyParseSection from "./OneOrManyParseSection";
 import NewLine from "../tokens/characters/NewLine";
+import NonConsumeParseSection from "./NonConsumeParseSection";
 
 /**SimpleVariableDeclaration
  * $a = 12
@@ -42,7 +40,5 @@ SimpleVariableParser.defSections(
     new AlternativeSectionParser(Identifier, Dollar),
     Identifier,
     new OptionalParser(SColon),
-    new OptionalParser(new OneOrManyParseSection(NewLine)),
-    new OptionalParser(EndOfFile)
+    new NonConsumeParseSection(EndOfFile)
 );
-

@@ -44,6 +44,7 @@ import UnregisteredToken from "../language/errors/tokens/UnregisteredToken"
 import Tokens from "./ast/Tokens"
 import DeclarationIdentifier from "./tokens/identifiers/DeclarationIdentifier";
 import SimpleVariableParser from "./parsers/SimpleVariableParser";
+import TopLevelParser from "./parsers/TopLevelParser";
 
 
 //TODO
@@ -61,7 +62,7 @@ import SimpleVariableParser from "./parsers/SimpleVariableParser";
 
 export default class Unify extends Language {
     constructor(code, fileName) {
-        super(code, fileName, SimpleVariableParser);
+        super(code, fileName, TopLevelParser);
         this.parse();
         //console.log(this.tokens.tokens);
     }
