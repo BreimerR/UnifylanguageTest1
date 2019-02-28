@@ -9,6 +9,6 @@ export default class TopLevelParser extends ParseSection {
 }
 
 TopLevelParser.defSections(
-    new OneOrManyParseSection(new OptionalParser(new SimpleVariableParser())),
+    new SimpleVariableParser,
     EndOfFile
 );

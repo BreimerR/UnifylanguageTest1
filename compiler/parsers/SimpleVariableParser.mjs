@@ -39,6 +39,5 @@ SimpleVariableParser.considerSpaces = false;
 SimpleVariableParser.defSections(
     new AlternativeSectionParser(Identifier, Dollar),
     Identifier,
-    new OptionalParser(SColon),
-    new NonConsumeParseSection(EndOfFile)
+    new OptionalParser(SColon)
 );

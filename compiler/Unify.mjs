@@ -40,9 +40,11 @@ import Underscore from "./tokens/characters/Underscore";
 import UnifyNumber from "./tokens/characters/UnifyNumber";
 import UnifyError from "./errors/UnifyError";
 import UnifySyntaxError from "./errors/syntax/UnifySyntaxError";
-import UnregisteredToken from "../language/errors/tokens/UnregisteredToken"
+import UnregisteredToken
+    from "../language/errors/tokens/UnregisteredToken"
 import Tokens from "./ast/Tokens"
-import DeclarationIdentifier from "./tokens/identifiers/DeclarationIdentifier";
+import DeclarationIdentifier
+    from "./tokens/identifiers/DeclarationIdentifier";
 import SimpleVariableParser from "./parsers/SimpleVariableParser";
 import TopLevelParser from "./parsers/TopLevelParser";
 
@@ -154,7 +156,7 @@ export default class Unify extends Language {
             if (parser === undefined) throw new UnifySyntaxError(tokens.currentToken);
 
 
-
+            parser.parse(tokens, this);
             // reset value to new tokens check
             hasValidToken = tokens.hasValidToken;
         }
