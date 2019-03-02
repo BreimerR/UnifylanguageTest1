@@ -9,13 +9,25 @@ export default class MixedOrderParser extends ParseSection {
     getSections(tokens, sections = this.sections) {
         let parseSections = [], {i} = tokens;
 
-        for (let sI in sections) {
-            let section = sections[sI];
+        for (let i = 0; i < sections.length > 0;) {
+            let section = sections[i];
 
-            if (this.constructor.test(tokens,section)) {
-                parseSections.push(section)
-            } else tokens.i = i;
 
+            let {i: tI} = tokens,
+                test = this.test(tokens, section);
+
+            if (test) {
+                sections = sections.filter((value, sI) => {
+                    return sI !== i;
+                });
+
+                parseSections.push(section);
+
+                i = 0;
+            } else {
+                tokens.i = tI;
+                i++
+            }
         }
 
         return parseSections;
