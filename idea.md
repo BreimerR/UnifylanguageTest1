@@ -32,3 +32,16 @@ ___Tokens___
 
 getname check will return false if we are doing top down parse
 we parse sporadically referencing the scope as we go down hill or upp hill
+
+
+if false a {
+	
+}
+
+same as
+if(a === false)
+or
+if 2 a
+
+same as
+if a === 2

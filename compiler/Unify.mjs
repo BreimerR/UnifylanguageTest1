@@ -45,8 +45,7 @@ import UnregisteredToken
 import Tokens from "./ast/Tokens"
 import DeclarationIdentifier
     from "./tokens/identifiers/DeclarationIdentifier";
-import SimpleVariableParser from "./parsers/SimpleVariableParser";
-import TopLevelParser from "./parsers/TopLevelParser";
+import TopLevelParser from "./parsers/statements/TopLevelParser";
 
 
 //TODO
@@ -64,10 +63,17 @@ import TopLevelParser from "./parsers/TopLevelParser";
 
 export default class Unify extends Language {
     constructor(code, fileName) {
+        // top level parser should
+        // push top level declarations to ast
         super(code, fileName, TopLevelParser);
         this.parse();
         //console.log(this.tokens.tokens);
     }
+
+    push(...sections) {
+        this.ast.push(...sections);
+    }
+
 
     /**
      * @protected
@@ -77,7 +83,6 @@ export default class Unify extends Language {
      * @param code String
      * @return Tokens
      * */
-
     tokenize(code) {
         /**
          * get string separated section array
@@ -87,6 +92,7 @@ export default class Unify extends Language {
 
         if (code.length < 1) return new Tokens([]);
         code = Splitter.split(code);
+
 
         let line = 1, row = 1;
 
@@ -155,7 +161,8 @@ export default class Unify extends Language {
 
             if (parser === undefined) throw new UnifySyntaxError(tokens.currentToken);
 
-
+            console.log(parser);
+            break;
             parser.parse(tokens, this);
             // reset value to new tokens check
             hasValidToken = tokens.hasValidToken;

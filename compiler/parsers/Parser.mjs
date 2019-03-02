@@ -1,5 +1,5 @@
 import {Parser as LanguageParser} from "../../language/parsers/Parser"
-import Token from "../tokens/Token"
+
 
 /// want to make it as so that
 // a parser test takes in scanned code
@@ -15,6 +15,57 @@ import Token from "../tokens/Token"
  * one after the other in that order
  * */
 export default class Parser extends LanguageParser {
+    constructor() {
+        super();
+        this.isParseSection = false;
+    }
+
+    static get testSections() {
+        // if undefined then we use the default would be empty
+        // noinspection JSUnresolvedVariable
+        return this.sections.slice(0, this.testSectionsThreshold)
+    }
+
+    shouldParse(tokens, sections = this.constructor.testSections) {
+        return this.constructor.runTest(tokens, sections)
+    }
+
+    static shouldParse({copy: tokens}) {
+        let {considerSpaces} = tokens;
+
+        tokens.considerSpaces = this.considerSpaces;
+
+        let test = this.runTest(tokens, this.testSections);
+
+
+        tokens.considerSpaces = considerSpaces;
+
+        return test;
+    }
+
+    static runTest(tokens, sections = this.sections, errors = this.errors) {
+
+        for (let i in sections) {
+            //if any section fails return false
+            if (!this.test(tokens, sections[i])) {
+                if (errors !== undefined) {
+                    let error = errors[i];
+                    if (error !== undefined) {
+                        let token = tokens.currentToken;
+                        if (!!token) {
+                            let {line,row} = token;
+                            console.log(error + "\n" + `On line ${line} row ${row}`+`\n${this.name}`);
+                        } else console.log(error)
+                    }
+                }
+
+                return false
+            }
+        }
+
+        return true;
+    }
+
     static parse(tokens) {
         let {considerSpaces, safe} = tokens;
         tokens.considerSpaces = this.considerSpaces;
@@ -26,71 +77,24 @@ export default class Parser extends LanguageParser {
         return stmnt;
     }
 
-    static consumeTokens(tokens, sections = this.parseSections) {
-        let consumed = [];
-        sections = sections[Symbol.iterator]();
+    static test(tokens, section) {
+        let bool = false;
 
-        for (let section of sections) {
-            if (section instanceof Parser) {
-                consumed.push(section.consumeTokens(tokens))
-            } else {
-                consumed.push(tokens.nextToken)
-            }
-        }
+        if (section instanceof Parser) {
+            if (section.isParseSection) {
+                bool = section.test(tokens);
+            } else bool = section.shouldParse(tokens)
 
-        return consumed;
-    }
-
-    static defSections(...sections) {
-        this.parseSections = sections;
-    }
-
-
-    // this are the section that are required to get a valid parser
-    // this are the section that are required to get a valid parser
-    static get parseThresholdSections() {
-        return this.parseSections.slice(0, this.thresholdIndex);
-    }
-
-    static shouldParse({copy: tokens}) {
-        let bool, {considerSpaces} = tokens;
-
-        tokens.considerSpaces = this.considerSpaces;
-
-        let sections = this.parseThresholdSections;
-
-        for (let i in sections) {
-            let section = sections[i];
-            let test = section instanceof Parser ? section.test(tokens) : (tokens.hasRemTokens ? tokens.nextToken.is(section) : false);
-
-            bool = bool === undefined ? test : bool && test
-        }
-
-        tokens.considerSpaces = considerSpaces;
-
-        return bool;
-    }
-
-    test(tokens, sections = this.constructor.parseSections) {
-        let bool;
-
-        for (let i in sections) {
-            let section = sections[i],
-                test = section instanceof Parser ? section.test(tokens) : (tokens.hasTokens ? tokens.nextToken.is(section) : false);
-
-            // exit on a single item failure
-            if (test === false) return false;
-
-            bool = bool === undefined ? test : bool && test
+        } else if (tokens.hasValidToken) {
+            if (typeof section === "string") {
+                bool = tokens.nextToken.validate(section);
+            } else bool = tokens.nextToken.is(section)
         }
 
         return bool;
-    }
-
-    consumeTokens(tokens, sections) {
-        return this.constructor.consumeTokens(tokens, sections)
     }
 }
 
 
 Parser.i = -1;
+Parser.considerSpaces = false;

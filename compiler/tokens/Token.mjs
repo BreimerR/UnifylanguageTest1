@@ -5,10 +5,6 @@ export default class Token extends LanguageToken {
         super(value)
     }
 
-    static get tokens() {
-        throw new Error("Please define tokens for the specified language")
-    }
-
     static test(tkString) {
         return this.rgx.test(tkString)
     }

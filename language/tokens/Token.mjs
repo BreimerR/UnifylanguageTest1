@@ -22,9 +22,9 @@ export class Token {
      * */
 
     is(token) {
-        try{
+        try {
             return this instanceof token;
-        }catch (e) {
+        } catch (e) {
             throw new Error(token);
         }
 
@@ -32,18 +32,19 @@ export class Token {
     }
 
     isEither(...token) {
-
         let {length} = token, bool;
 
-        for(let t of token){
-            let tst = this.is(t);
-            if(tst){
-                return tst
+        for (let t of token) {
+            if (this.is(t)) {
+                return true
             }
         }
 
-
         return false;
+    }
+
+    validate(tkString) {
+        return this.token === tkString;
     }
 
     static toString() {

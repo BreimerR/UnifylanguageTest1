@@ -22,10 +22,6 @@
 
 export class Parser {
 
-    constructor(...sections) {
-        this.sections = sections
-    }
-
     // uses the code copy alone
     // should be a sneak peek into the code structure i.e the beginning
     // of a line of code should be able to tell the parser that should be used

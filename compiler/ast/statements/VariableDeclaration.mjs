@@ -10,6 +10,7 @@ import Token from "../../tokens/Token"
 export default class VariableDeclaration extends Statement {
     constructor() {
         super();
+
     }
 
     // a statement has segments with valid names

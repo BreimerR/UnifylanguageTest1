@@ -23,8 +23,8 @@ export default class Splitter {
 
     // regex to get all the existing strings
     static get identifiers() {
-        let r = /(\$+)?(_+)?([a-zA-Z][a-zA-Z0-9_]*|_+[a-zA-Z0-9_]*)/;
-        return `(\\$+)?(_+)?([a-zA-Z][a-zA-Z0-9_]*|_+[a-zA-Z0-9_]*)`
+        let r = /(_+)?([a-zA-Z][a-zA-Z0-9_$]*|_+[a-zA-Z0-9_$]*)/;
+        return `(_+)?([a-zA-Z][a-zA-Z0-9_$]*|_+[a-zA-Z0-9_$]*)`
     }
 
     static get digits() {
