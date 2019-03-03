@@ -1,11 +1,11 @@
-import ZeroOrManyParseSections from "./ZeroOrManyParseSections";
+import ZeroOrManySections from "./ZeroOrManySections";
 import ParseSection from "./ParseSection";
 
-export default class RepetitiveByParser extends ParseSection {
+export default class RepetitiveBySection extends ParseSection {
     constructor(by, section) {
         super(
             section,
-            new ZeroOrManyParseSections(
+            new ZeroOrManySections(
                 by,
                 section
             )

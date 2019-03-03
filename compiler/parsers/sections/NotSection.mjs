@@ -1,7 +1,7 @@
 import ParseSection from "./ParseSection";
 
 
-export default class NotParserSection extends ParseSection {
+export default class NotSection extends ParseSection {
     test(tokens, sections = this.sections) {
         let [section, ...against] = sections;
         if (tokens.hasValidToken) {

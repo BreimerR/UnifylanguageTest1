@@ -1,6 +1,6 @@
 import ParseSection from "./ParseSection";
 
-export default class MixedOrderParser extends ParseSection {
+export default class MixedOrderSection extends ParseSection {
     test(tokens) {
         let {i} = tokens;
         return this.getSections(tokens).length > 0;

@@ -1,8 +1,7 @@
 import Parser from "../Parser";
 import PropertyStart from "../../ast/statements/PropertyStart";
-import MixedOrderParser from "./MixedOrderParser";
-import AlternativeSectionParser from "./AlternativeSectionParser";
-import OptionalParser from "./OptionalParser";
+import AlternativeSection from "./AlternativeSection";
+import OptionalMixedOrderSections from "./OptionalMixedOrderSections";
 
 export default class PropertyStartParser extends Parser {
 
@@ -11,8 +10,9 @@ export default class PropertyStartParser extends Parser {
 PropertyStartParser.statement = PropertyStart;
 
 PropertyStartParser.sections = [
-    new MixedOrderParser(
-        new AlternativeSectionParser("public", "protected", "private"),
-
+    new OptionalMixedOrderSections(
+        new AlternativeSection("public", "protected", "private"),
+        "static",
+        "final"
     )
 ];

@@ -1,15 +1,20 @@
 import Parser from "../Parser";
 import TypeDeclaration from "../../ast/statements/TypeDeclaration";
-import NotParserSection from "../sections/NotParserSection";
+import NotSection from "../sections/NotSection";
 import Identifier from "../../tokens/identifiers/Identifier";
 import Keyword from "../../tokens/identifiers/Keyword";
-import OptionalParser from "../sections/OptionalParser";
+import OptionalSection from "../sections/OptionalSection";
 import LessThan from "../../tokens/characters/LessThan";
 import GreaterThan from "../../tokens/characters/GreaterThan";
-import ZeroOrManyParseSections
-    from "../sections/ZeroOrManyParseSections";
+import ZeroOrManySections
+    from "../sections/ZeroOrManySections";
 import Pipe from "../../tokens/characters/Pipe";
 import Coma from "../../tokens/characters/Coma";
+import LSBracket from "../../tokens/characters/LSBracket";
+import RSBracket from "../../tokens/characters/RSBracket";
+import AlternativeSection from "../sections/AlternativeSection";
+import UnifyNumber from "../../tokens/characters/UnifyNumber";
+import RepetitiveBySection from "../sections/RepetitiveBySection";
 
 export default class TypeDeclarationParser extends Parser {
 
@@ -20,7 +25,7 @@ TypeDeclarationParser.statement = TypeDeclaration;
 
 let typeDeclaration = new TypeDeclarationParser;
 
-let zero = new ZeroOrManyParseSections(
+let zero = new ZeroOrManySections(
     Pipe,
     typeDeclaration
 );
@@ -29,7 +34,7 @@ zero.errors = [
     undefined, "expecting a type declaration"
 ];
 
-let zeroOrManyTypeOrders = new ZeroOrManyParseSections(
+let zeroOrManyTypeOrders = new ZeroOrManySections(
     Coma,
     typeDeclaration,
     zero
@@ -39,7 +44,7 @@ zeroOrManyTypeOrders.errors = [undefined
     , "expecting a type declaration"
 ];
 
-let optional = new OptionalParser(
+let optional = new OptionalSection(
     LessThan,
     typeDeclaration,
     zero,
@@ -50,8 +55,21 @@ let optional = new OptionalParser(
 optional.errors = [undefined, "Expecting at least one type declaration "];
 
 TypeDeclarationParser.sections = [
-    new NotParserSection(Identifier, Keyword),
-    optional
+    new NotSection(Identifier, Keyword),
+    optional,
+    new OptionalSection(
+        LSBracket,
+        new OptionalSection(
+            new AlternativeSection(
+                UnifyNumber,
+                new RepetitiveBySection(
+                    Coma,
+                    new TypeDeclarationParser
+                )
+            )
+        ),
+        RSBracket
+    )
 ];
 
 

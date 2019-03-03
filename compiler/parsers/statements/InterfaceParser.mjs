@@ -1,10 +1,10 @@
 import Parser from "../Parser";
-import NotParserSection from "../sections/NotParserSection";
+import NotParserSection from "../sections/NotSection";
 import Identifier from "../../tokens/identifiers/Identifier";
 import Keyword from "../../tokens/identifiers/Keyword";
-import ZeroOrManyParseSections
-    from "../sections/ZeroOrManyParseSections";
-import OptionalParser from "../sections/OptionalParser";
+import ZeroOrManySections
+    from "../sections/ZeroOrManySections";
+import OptionalSection from "../sections/OptionalSection";
 import TypeDeclarationParser from "./TypeDeclarationParser";
 
 export default class InterfaceParser extends Parser {
@@ -16,15 +16,15 @@ InterfaceParser.statement = InterfaceDeclaration;
 InterfaceParser.sections = [
     "interface",
     new NotParserSection(Identifier, Keyword),
-    new OptionalParser(
+    new OptionalSection(
         Colon,
         new TypeDeclarationParser,
-        new ZeroOrManyParseSections(
+        new ZeroOrManySections(
             Coma,
             new TypeDeclarationParser
         )
     ),
-    new OptionalParser(
+    new OptionalSection(
         new InterfaceBodyDeclarationParser
     )
 ];

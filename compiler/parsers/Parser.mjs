@@ -20,6 +20,10 @@ export default class Parser extends LanguageParser {
         this.isParseSection = false;
     }
 
+    get considerSpaces (){
+        return this.constructor.considerSpaces
+    }
+
     static get testSections() {
         // if undefined then we use the default would be empty
         // noinspection JSUnresolvedVariable
@@ -27,7 +31,12 @@ export default class Parser extends LanguageParser {
     }
 
     shouldParse(tokens, sections = this.constructor.testSections) {
-        return this.constructor.runTest(tokens, sections)
+        let {considerSpaces} = tokens;
+        tokens.considerSpaces = this.considerSpaces;
+        let test = this.constructor.runTest(tokens, sections);
+        tokens.considerSpaces = considerSpaces;
+
+        return test;
     }
 
     static shouldParse({copy: tokens}) {
@@ -47,20 +56,7 @@ export default class Parser extends LanguageParser {
 
         for (let i in sections) {
             //if any section fails return false
-            if (!this.test(tokens, sections[i])) {
-                if (errors !== undefined) {
-                    let error = errors[i];
-                    if (error !== undefined) {
-                        let token = tokens.currentToken;
-                        if (!!token) {
-                            let {line,row} = token;
-                            console.log(error + "\n" + `On line ${line} row ${row}`+`\n${this.name}`);
-                        } else console.log(error)
-                    }
-                }
-
-                return false
-            }
+            if (!this.test(tokens, sections[i])) return false
         }
 
         return true;
@@ -83,8 +79,11 @@ export default class Parser extends LanguageParser {
         if (section instanceof Parser) {
             if (section.isParseSection) {
                 bool = section.test(tokens);
-            } else bool = section.shouldParse(tokens)
+            } else {
 
+                bool = section.shouldParse(tokens);
+                //console.log(section, bool)
+            }
         } else if (tokens.hasValidToken) {
             if (typeof section === "string") {
                 bool = tokens.nextToken.validate(section);

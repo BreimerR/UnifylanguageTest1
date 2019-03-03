@@ -9,4 +9,9 @@ export default class Token extends LanguageToken {
         return this.rgx.test(tkString)
     }
 
+
+    static testToken(token) {
+        return token instanceof this;
+    }
+
 }

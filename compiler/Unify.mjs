@@ -161,7 +161,6 @@ export default class Unify extends Language {
 
             if (parser === undefined) throw new UnifySyntaxError(tokens.currentToken);
 
-            console.log(parser);
             break;
             parser.parse(tokens, this);
             // reset value to new tokens check

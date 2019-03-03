@@ -1,6 +1,6 @@
 import ParseSection from "./ParseSection";
 
-export default class OneOrManyParseSection extends ParseSection {
+export default class OneOrManySection extends ParseSection {
     test(tokens, sections = this.sections) {
         // test all section once if success test again for
         let {i} = tokens, c = 0;

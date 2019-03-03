@@ -5,13 +5,13 @@ export default class Keyword extends Identifier {
         return this.constructor.testToken(token)
     }
 
+
     static testToken(token) {
         let {words} =  this;
         for (let i in words) {
             let word = words[i];
             if(token.token === word)  return true;
         }
-
 
         return false;
     }

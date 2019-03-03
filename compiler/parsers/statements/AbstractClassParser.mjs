@@ -1,11 +1,13 @@
 import Parser from "../Parser";
-import OptionalParser from "../sections/OptionalParser";
+import OptionalSection from "../sections/OptionalSection";
 import TypeDeclarationParser from "./TypeDeclarationParser";
 import Colon from "../../tokens/characters/Colon";
 import Coma from "../../tokens/characters/Coma";
-import RepetitiveByParser from "../sections/RepetitiveByParser";
+import RepetitiveBySection from "../sections/RepetitiveBySection";
 import AbstractClassDeclaration
     from "../../ast/statements/AbstractClassDeclaration";
+import AbstractClassBodyParser
+    from "../sections/AbstractClassBodyParser";
 
 export default class AbstractClassParser extends Parser {
 
@@ -15,14 +17,14 @@ AbstractClassParser.statement = AbstractClassDeclaration;
 AbstractClassParser.sections = [
     "abstract",
     // parse extensions
-    new OptionalParser(
+    new OptionalSection(
         Colon,
-        new RepetitiveByParser(
+        new RepetitiveBySection(
             Coma,
             new TypeDeclarationParser
         ),
     ),
-    new OptionalParser(
+    new OptionalSection(
         new AbstractClassBodyParser
     )
 ];

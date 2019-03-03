@@ -1,24 +1,22 @@
-import Parser from "../Parser";
 import ParseSection from "./ParseSection";
 
-export default class AlternativeSectionParser extends ParseSection {
+export default class AlternativeSection extends ParseSection {
     test(tokens) {
-        return this.getSection(tokens) !== undefined;
+        let section = this.getSection(tokens);
+
+        //console.log(section);
+        return section !== undefined;
     }
 
-    getSection(tokens) {
-        let {sections} = this;
-
+    getSection(tokens, sections = this.sections) {
         for (let sI in sections) {
             let {i} = tokens,
                 section = sections[sI];
-
-
             let test = this.constructor.test(tokens, section);
 
             if (test) {
                 return section
-            } else if (sI + 1 <= sections.length) {
+            } else  {
                 tokens.i = i
             }
         }

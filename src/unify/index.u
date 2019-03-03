@@ -1,3 +1,31 @@
-Array<Char>|Char me;
+class Language(private String code){
+	protected Class<Parser>[] parsers;
 
-Int age
+	init{}
+}
+
+class Tokens(private Token[] tokens)
+
+class Token(String tkString:"")
+
+
+class Unify extends  Language :: Year{
+	Class<Token>[] tokens
+
+	parse(Tokens tokens){
+
+	}
+
+
+	get parser{
+
+	}
+
+	set parser:Boolean(Parser parser){}
+}
+
+class Parser{
+	parse{}
+
+	static shouldParse{}
+}
