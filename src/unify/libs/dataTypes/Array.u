@@ -1,0 +1,17 @@
+class Array<T>(Int length = 0){
+
+	constructor(Class<Object> ...order){
+		/*this.length =  order.length*/
+	}
+
+	/*by */
+	get smile{
+
+	}
+
+	prefix toString{
+
+	}
+
+}
+

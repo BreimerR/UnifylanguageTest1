@@ -1,0 +1,10 @@
+class Byte :: DataType{
+
+	size =  4b
+
+	prefix toBits {
+
+	}
+
+
+}

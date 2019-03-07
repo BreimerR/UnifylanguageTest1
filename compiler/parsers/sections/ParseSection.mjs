@@ -13,4 +13,15 @@ export default class ParseSection extends Parser {
     test(tokens) {
         return this.constructor.runTest(tokens, this.sections)
     }
+
+    /*return a mixed array of statements and tokens*/
+    static parse(tokens) {
+        let parsed = [], {sections} = this;
+
+        for (let sI in sections) {
+            let section = sections[sI];
+        }
+
+        return parsed;
+    }
 }

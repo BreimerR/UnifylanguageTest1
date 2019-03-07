@@ -1,0 +1,28 @@
+class Object(private String name = "Anonymous"){
+
+	get name{
+		/*return */
+	}
+
+	/**
+	* the size of an object is dependant
+	* on the variables declared in the object
+	* and not in the functions
+	*/
+	get size{
+
+	}
+
+	// return this.size
+	prefix sizeOf{
+
+	}
+
+	prefix log {
+		/*return System.out.log(...logs)*/
+	}
+
+	prefix toString  {
+		/*return this.name + this.address*/
+	}
+}

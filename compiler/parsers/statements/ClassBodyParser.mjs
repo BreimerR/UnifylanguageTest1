@@ -9,7 +9,7 @@ import VariableDeclarationParser from "./VariableDeclarationParser";
 import FunctionParser from "./FunctionParser";
 import ParseSection from "../sections/ParseSection";
 import OptionalSection from "../sections/OptionalSection";
-import FunctionBodyParser from "./FunctionBodyParser";
+import {FunctionBodyParser} from "./FunctionParser";
 import Identifier from "../../tokens/identifiers/Identifier";
 import LBracket from "../../tokens/characters/LBracket";
 import RBracket from "../../tokens/characters/RBracket";
@@ -17,6 +17,9 @@ import RepetitiveBySection from "../sections/RepetitiveBySection";
 import TypeDeclarationParser from "./TypeDeclarationParser";
 import Pipe from "../../tokens/characters/Pipe";
 import Colon from "../../tokens/characters/Colon";
+import CommentParser from "./CommentParser";
+import PropertyDeclarationParser from "./PropertyDeclarationParser";
+import ObjectParser from "./ObjectParser";
 
 export default class ClassBodyParser extends Parser {
 
@@ -27,38 +30,51 @@ ClassBodyParser.statement = ClassBody;
 ClassBodyParser.sections = [
     LSqBracket,
     new ZeroOrManySections(
-        new PropertyStartParser,
         new AlternativeSection(
-            new AlternativeSection(
-                new ParseSection(
-                    "get",
-                    Identifier,
-                    new FunctionBodyParser
-                ),
-                new ParseSection(
-                    "set",
-                    Identifier,
-                    new OptionalSection(
-                        Colon,
-                        new RepetitiveBySection(
-                            Pipe,
-                            new TypeDeclarationParser)
-                    ),
-                    LBracket,
-                    new VariableDeclarationParser,
-                    RBracket,
-                    new FunctionBodyParser
-                )
-            ),
-            new VariableDeclarationParser,
+            new CommentParser,
             new ParseSection(
-                new OptionalSection(
+                new PropertyStartParser,
+                new AlternativeSection(
                     new AlternativeSection(
-                        "prefix",
-                        "infix"
-                    )
-                ),
-                new FunctionParser
+                        new ParseSection(
+                            "get",
+                            Identifier,
+                            new OptionalSection(
+                                Colon,
+                                new RepetitiveBySection(
+                                    Pipe,
+                                    new TypeDeclarationParser)
+                            ),
+                            new FunctionBodyParser
+                        ),
+                        new ParseSection(
+                            "set",
+                            Identifier,
+                            new OptionalSection(
+                                Colon,
+                                new RepetitiveBySection(
+                                    Pipe,
+                                    new TypeDeclarationParser)
+                            ),
+                            LBracket,
+                            new VariableDeclarationParser,
+                            RBracket,
+                            new FunctionBodyParser
+                        )
+                    ),
+                    new ParseSection(
+                        new OptionalSection(
+                            new AlternativeSection(
+                                "prefix",
+                                "infix"
+                            )
+                        ),
+                        new FunctionParser
+                    ),
+                    new ObjectParser,
+                    new VariableDeclarationParser,
+                    new PropertyDeclarationParser
+                )
             )
         )
     ),

@@ -1,8 +1,5 @@
 import Parser from "../Parser";
 import TypeDeclaration from "../../ast/statements/TypeDeclaration";
-import NotSection from "../sections/NotSection";
-import Identifier from "../../tokens/identifiers/Identifier";
-import Keyword from "../../tokens/identifiers/Keyword";
 import OptionalSection from "../sections/OptionalSection";
 import LessThan from "../../tokens/characters/LessThan";
 import GreaterThan from "../../tokens/characters/GreaterThan";
@@ -15,6 +12,7 @@ import RSBracket from "../../tokens/characters/RSBracket";
 import AlternativeSection from "../sections/AlternativeSection";
 import UnifyNumber from "../../tokens/characters/UnifyNumber";
 import RepetitiveBySection from "../sections/RepetitiveBySection";
+import SimpleIdentifierParser from "./SimpleIdentifierParser";
 
 export default class TypeDeclarationParser extends Parser {
 
@@ -55,13 +53,15 @@ let optional = new OptionalSection(
 optional.errors = [undefined, "Expecting at least one type declaration "];
 
 TypeDeclarationParser.sections = [
-    new NotSection(Identifier, Keyword),
+    new SimpleIdentifierParser,
     optional,
     new OptionalSection(
         LSBracket,
         new OptionalSection(
             new AlternativeSection(
+                // array length
                 UnifyNumber,
+                // array order
                 new RepetitiveBySection(
                     Coma,
                     new TypeDeclarationParser

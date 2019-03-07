@@ -14,7 +14,7 @@ export default class Splitter {
     // breaks everything into an array that we can loop over
     static get regex() {
         if (this.rgx) return this.rgx;
-        return this.rgx = `(${Splitter.signs}|${Splitter.identifiers}|${Splitter.digits})`;
+        return this.rgx = `(${Splitter.identifiers}|${Splitter.signs}|${Splitter.digits})`;
     }
 
     static get signs() {
@@ -23,8 +23,9 @@ export default class Splitter {
 
     // regex to get all the existing strings
     static get identifiers() {
-        let r = /(_+)?([a-zA-Z][a-zA-Z0-9_$]*|_+[a-zA-Z0-9_$]*)/;
-        return `(_+)?([a-zA-Z][a-zA-Z0-9_$]*|_+[a-zA-Z0-9_$]*)`
+        let r = /(((_+)[a-zA-Z0-9$_]+)|((_+)?([a-zA-Z][a-zA-Z0-9_$]*|_+[a-zA-Z0-9_$]*)))/;
+
+        return `(((_+)[a-zA-Z0-9$_]+)|((_+)?([a-zA-Z][a-zA-Z0-9_$]*|_+[a-zA-Z0-9_$]*)))`
     }
 
     static get digits() {

@@ -1,0 +1,3 @@
+class Bit :: DataType{
+	size =  1
+}

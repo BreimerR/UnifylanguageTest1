@@ -1,8 +1,6 @@
 import Parser from "../Parser";
 import Dollar from "../../tokens/characters/Dollar";
-import NotParserSection from "../sections/NotSection";
 import Identifier from "../../tokens/identifiers/Identifier";
-import Keyword from "../../tokens/identifiers/Keyword";
 import VariableDeclaration
     from "../../ast/statements/VariableDeclaration";
 import OptionalSection from "../sections/OptionalSection";
@@ -13,16 +11,12 @@ import TypeDeclarationParser from "./TypeDeclarationParser";
 import ParseSection from "../sections/ParseSection";
 import Pipe from "../../tokens/characters/Pipe";
 import DefaultValueOrTestParser from "./DefaultValueOrTestParser";
+import DelegationParser from "./DelegationParser";
 import AssignmentParser from "./AssignmentParser";
 
 export default class VariableDeclarationParser extends Parser {
 
 }
-
-class Mutable  extends Array{
-
-}
-
 
 VariableDeclarationParser.statement = VariableDeclaration;
 
@@ -44,6 +38,9 @@ VariableDeclarationParser.sections = [
     ),
     new OptionalSection(
         new AssignmentParser
+    ),
+    new OptionalSection(
+        new DelegationParser
     ),
     new OptionalSection(
         SColon

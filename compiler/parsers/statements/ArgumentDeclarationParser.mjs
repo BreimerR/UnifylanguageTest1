@@ -13,6 +13,7 @@ import VariableDeclarationParser from "./VariableDeclarationParser";
 import RBracket from "../../tokens/characters/RBracket";
 import LBracket from "../../tokens/characters/LBracket";
 import Coma from "../../tokens/characters/Coma";
+import Dot from "../../tokens/characters/Dot";
 
 export default class ArgumentDeclarationParser extends Parser {
 
@@ -46,6 +47,6 @@ let functionArgument = new ParseSection(
 ArgumentDeclarationParser.sections = [
     new AlternativeSection(
         functionArgument,
-        new VariableDeclarationParser,
+        new VariableDeclarationParser
     )
 ];

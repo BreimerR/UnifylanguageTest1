@@ -1,7 +1,5 @@
 import Parser from "../Parser";
-import NotSection from "../sections/NotSection";
 import Identifier from "../../tokens/identifiers/Identifier";
-import Keyword from "../../tokens/identifiers/Keyword";
 import OptionalSection from "../sections/OptionalSection";
 import ClassDeclaration from "../../ast/statements/ClassDeclaration";
 import TypeDeclarationParser from "./TypeDeclarationParser";
@@ -9,8 +7,6 @@ import ClassExtensionParser from "./ClassExtensionParser";
 import AbstractionImplementationParser
     from "./AbstractionImplementationParser";
 import ClassBodyParser from "./ClassBodyParser";
-import ArgumentsParser from "./ArgumentsParser";
-import ZeroOrManySections from "../sections/ZeroOrManySections";
 import RepetitiveBySection from "../sections/RepetitiveBySection";
 import Coma from "../../tokens/characters/Coma";
 import ArgumentDeclarationParser from "./ArgumentDeclarationParser";
@@ -18,6 +14,9 @@ import PropertyStartParser from "../sections/PropertyStartParser";
 import LBracket from "../../tokens/characters/LBracket";
 import RBracket from "../../tokens/characters/RBracket";
 import ParseSection from "../sections/ParseSection";
+import Dot from "../../tokens/characters/Dot";
+import DelegationParser from "./DelegationParser";
+import AlternativeSection from "../sections/AlternativeSection";
 
 export default class ClassParser extends Parser {
 
@@ -25,19 +24,45 @@ export default class ClassParser extends Parser {
 
 
 ClassParser.statement = ClassDeclaration;
+
+let varyingArgs = new ParseSection(
+    new OptionalSection(
+        new PropertyStartParser
+    ),
+    new TypeDeclarationParser,
+    Dot, Dot, Dot, Identifier,
+    new OptionalSection(
+        new DelegationParser
+    )
+);
+
+let args = new RepetitiveBySection(
+    Coma,
+    new ParseSection(
+        new OptionalSection(
+            new PropertyStartParser
+        ),
+        new ArgumentDeclarationParser
+    )
+);
+
 ClassParser.sections = [
+    new OptionalSection(
+        "closed"
+    ),
     "class",
     new TypeDeclarationParser,
     new OptionalSection(
         LBracket,
-        new RepetitiveBySection(
-            Coma,
+        new AlternativeSection(
             new ParseSection(
-                new OptionalSection(
-                    new PropertyStartParser
-                ),
-                new ArgumentDeclarationParser
-            )
+                new OptionalSection(varyingArgs),Coma,args
+            ),
+            new ParseSection(
+                args,Coma,new OptionalSection(varyingArgs)
+            ),
+            varyingArgs,
+            args,
         ),
         RBracket
     ),

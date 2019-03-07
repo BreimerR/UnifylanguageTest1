@@ -1,0 +1,17 @@
+/*
+class System : Object("System",)
+
+*/
+
+class System {
+	static out = {
+		//
+		log aka printLn|echo(...content){
+
+		}
+	}
+
+	static in = {
+
+	}
+}

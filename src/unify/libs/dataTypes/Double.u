@@ -1,0 +1,3 @@
+class Double :: DataType{
+	size =  8B;
+}

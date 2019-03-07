@@ -20,7 +20,7 @@ import At from "../../tokens/characters/At";
 import Percent from "../../tokens/characters/Percent";
 import UnifyNumber from "../../tokens/characters/UnifyNumber";
 import {Token} from "../../../language/tokens/Token";
-import NotParserSection from "../sections/NotSection";
+import NotSection from "../sections/NotSection";
 
 export default class StringParser extends Parser {
 
@@ -39,7 +39,7 @@ StringParser.sections = [
     new ZeroOrManySections(
         new AlternativeSection(
             new EscapeCharacterParser,
-            new NotParserSection(Token, DExclamation)
+            new NotSection(Token, DExclamation)
         )
     ),
     DExclamation

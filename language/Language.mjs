@@ -4,7 +4,6 @@
 *
 * */
 
-import Splitter from "./parsers/Splitter";
 import {Tokens} from "./ast/Tokens"
 
 

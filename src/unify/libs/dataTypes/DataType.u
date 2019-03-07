@@ -1,0 +1,3 @@
+abstract DataType {
+	abstract Bit size;
+}

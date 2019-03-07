@@ -2,20 +2,38 @@ import ParseSection from "./ParseSection";
 
 
 export default class NotSection extends ParseSection {
-    test(tokens, sections = this.sections) {
-        let [section, ...against] = sections;
-        if (tokens.hasValidToken) {
-            let token = tokens.nextToken;
-            if (token.is(section)) {
-                for (let sI in against) {
-                    if (against[sI].testToken(token)) {
-                        return false
-                    }
+    constructor(...[section, ...sections]) {
+        super(...sections);
+        this.sections = [section];
+        this.ageinsts = sections
+
+    }
+
+    test(tokens, sections = this.ageinsts) {
+        if (super.test(tokens)) {
+            let {currentToken} = tokens;
+            for (let sI in sections) {
+                if (sections[sI].testToken(currentToken)) {
+                    return false;
                 }
-                return true;
             }
+
+            return true;
+
         }
 
+        /* if (tokens.hasValidToken) {
+             let token = tokens.nextToken;
+             if (token.is(section)) {
+                 for (let sI in against) {
+                     if (against[sI].testToken(token)) {
+                         return false
+                     }
+                 }
+                 return true;
+             }
+         }
+        */
 
         return false
     }

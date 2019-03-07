@@ -6,16 +6,20 @@ import Colon from "../../tokens/characters/Colon";
 import NumberParser from "./NumberParser";
 import DefaultValueOrTest
     from "../../ast/statements/DefaultValueOrTest";
+import RegexParser from "./RegexParser";
 
 export default class DefaultValueOrTestParser extends Parser {
 
 }
+
+
 
 DefaultValueOrTestParser.statement = DefaultValueOrTest;
 DefaultValueOrTestParser.sections = [
     Colon,
     new AlternativeSection(
         new StringParser,
+        new RegexParser,
         new NumberParser
     )
 ];

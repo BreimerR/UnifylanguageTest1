@@ -229,8 +229,21 @@ See Generic constraints
     ((getter? (semi? setter)?) | (setter? (semi? getter)?))
   ;
 
+// delegation by an expression leads to things like 
+```
+class Int {
+	getter(){}
+	
+	setter(){}
+}
+
+class Deligated{
+	// where on trial
+	$name by  12 + 12
+}
+```
 ### propertyDelegate (used by propertyDeclaration)
-  : 'by' expression
+  : 'by' Type
   ;
   
 #### getter (used by propertyDeclaration)
@@ -408,7 +421,7 @@ See Returns and jumps
 ## Expressions
 Precedence	Title	Symbols
 Highest	Postfix	++, --, ., ?., ?
- 	Prefix	-, +, ++, --, !, label
+ 	Prefix	-, +, ++, --, !, label, simpleIdentifier
  	Type RHS	:, as, as?
  	Multiplicative	*, /, %
  	Additive	+, -

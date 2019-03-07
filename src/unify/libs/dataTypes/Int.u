@@ -1,0 +1,6 @@
+class Int{
+	// size is in 4 bytes
+	size =  4B
+
+
+}
