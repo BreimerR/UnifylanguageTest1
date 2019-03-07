@@ -11,6 +11,8 @@ import StringParser from "./StringParser";
 import BinaryOperatorParser from "./BinaryOperatorParser";
 import RBracket from "../../tokens/characters/RBracket";
 import LBracket from "../../tokens/characters/LBracket";
+import RepetitiveBySection from "../sections/RepetitiveBySection";
+import Coma from "../../tokens/characters/Coma";
 
 
 export class OrExpressionParser extends Parser {
@@ -39,14 +41,15 @@ export class GroupParser extends Parser {
 
 // simpleReference
 // name argumentsDeclaration? (. simpleReference)*
-export class ReferenceParser extends Parser{}
+export class ReferenceParser extends Parser {
+}
 
 
 export default class ExpressionParser extends Parser {
 
 }
 
-export class ArgumentsParser extends Parser{
+export class ArgumentsParser extends Parser {
 
 }
 
@@ -100,9 +103,13 @@ BinaryExpressionParser.sections = [
 ];
 
 ReferenceParser.sections = [
-
+    LBracket,
+    new RepetitiveBySection(
+        Coma,
+        new Expression
+    ),
+    RBracket
 ];
-
 
 
 ExpressionParser.statement = Expression;
