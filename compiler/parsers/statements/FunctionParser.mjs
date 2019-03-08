@@ -15,6 +15,9 @@ import RBracket from "../../tokens/characters/RBracket";
 import LBracket from "../../tokens/characters/LBracket";
 import VariableDeclarationParser from "./VariableDeclarationParser";
 import AlternativeZeroOrMany from "../sections/AlternativeZeroOrMany";
+import ExpressionParser from "./ExpressionParser";
+import OptionalSection from "../sections/OptionalSection";
+import SColon from "../../tokens/characters/SColon";
 
 export default class FunctionParser extends Parser {
 
@@ -48,6 +51,12 @@ FunctionBodyParser.sections = [
                     RBracket
                 ),
                 new NumberParser
+            )
+        ),
+        new ParseSection(
+            new ExpressionParser,
+            new OptionalSection(
+                SColon
             )
         )
     ),

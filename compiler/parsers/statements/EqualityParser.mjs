@@ -6,6 +6,7 @@ import Exclamation from "../../tokens/characters/Exclamation";
 import Equals from "../../tokens/characters/Equals";
 import RepetitiveBySection from "../sections/RepetitiveBySection";
 import EqualityStatement from "../../ast/statements/EqualityStatement";
+import EqualityOperatorParser from "./EqualityOperatorParser";
 
 export default class EqualityParser extends Parser {
 }
@@ -19,28 +20,11 @@ export default class EqualityParser extends Parser {
 */
 
 EqualityParser.statement = EqualityStatement;
+
+
 EqualityParser.sections = [
     new RepetitiveBySection(
-        new AlternativeSection(
-            new ParseSection(
-                Exclamation,
-                Equals
-            ),
-            new ParseSection(
-                Exclamation,
-                Equals,
-                Equals
-            ),
-            new ParseSection(
-                Equals,
-                Equals
-            ),
-            new ParseSection(
-                Equals,
-                Equals,
-                Equals
-            )
-        ),
+        new EqualityOperatorParser,
         new ComparisonParser,
     )
 ];

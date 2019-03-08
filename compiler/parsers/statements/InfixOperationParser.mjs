@@ -5,6 +5,9 @@ import ParseSection from "../sections/ParseSection";
 import TypeDeclarationParser from "./TypeDeclarationParser";
 import InfixOperation from "../../ast/statements/InfixOperation";
 import AlternativeZeroOrMany from "../sections/AlternativeZeroOrMany";
+import OptionalSection from "../sections/OptionalSection";
+import ZeroOrManySections from "../sections/ZeroOrManySections";
+import Identifier from "../../tokens/identifiers/Identifier";
 
 export default class InfixOperationParser extends Parser {
 }
@@ -21,11 +24,11 @@ InfixOperationParser.sections = [
     elvis,
     new AlternativeZeroOrMany(
         new ParseSection(
-            "in",
+            Identifier,
             elvis
         ),
         new ParseSection(
-            "is",
+            Identifier,
             new TypeDeclarationParser
         )
     )

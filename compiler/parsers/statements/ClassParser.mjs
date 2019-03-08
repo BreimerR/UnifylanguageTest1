@@ -17,6 +17,7 @@ import ParseSection from "../sections/ParseSection";
 import Dot from "../../tokens/characters/Dot";
 import DelegationParser from "./DelegationParser";
 import AlternativeSection from "../sections/AlternativeSection";
+import Pipe from "../../tokens/characters/Pipe";
 
 export default class ClassParser extends Parser {
 
@@ -29,7 +30,10 @@ let varyingArgs = new ParseSection(
     new OptionalSection(
         new PropertyStartParser
     ),
-    new TypeDeclarationParser,
+    new RepetitiveBySection(
+        Pipe,
+        new TypeDeclarationParser,
+    ),
     Dot, Dot, Dot, Identifier,
     new OptionalSection(
         new DelegationParser

@@ -1,4 +1,4 @@
-class Array<T>(Int length = 0){
+class Array<T>(Int|String length = simple()){
 
 	constructor(Class<Object> ...order){
 		/*this.length =  order.length*/
@@ -12,6 +12,17 @@ class Array<T>(Int length = 0){
 	prefix toString{
 
 	}
+}
+
+
+class String(Char...chars): Array<Char>{
 
 }
 
+$s =  new String(... toCharArray 12)
+
+
+smile(String smile){
+
+
+}

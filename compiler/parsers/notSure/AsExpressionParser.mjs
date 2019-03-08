@@ -5,7 +5,7 @@ import ParseSection from "../sections/ParseSection";
 import PrefixUnaryExpressionParser
     from "../statements/PrefixUnaryExpressionParser";
 import Question from "../../tokens/characters/Question";
-import TypeDeclarationParser from "./TypeDeclarationParser";
+import TypeDeclarationParser from "../statements/TypeDeclarationParser";
 import AsExpression from "../../ast/statements/AsExpression";
 
 export default class AsExpressionParser extends Parser {

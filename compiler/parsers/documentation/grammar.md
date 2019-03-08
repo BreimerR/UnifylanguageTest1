@@ -582,7 +582,7 @@ Lowest	Assignment	=, +=, -=, *=, /=, %=
   
 ### literalConstant (used by primaryExpression)
   : BooleanLiteral
-  | IntegerLiteral
+  | IntegerLiteralannotation
   | HexLiteral
   | BinLiteral
   | CharacterLiteral
@@ -591,6 +591,7 @@ Lowest	Assignment	=, +=, -=, *=, /=, %=
   | LongLiteral
   | UnsignedLiteral
   ;
+
 
 ### RegexLiteral
   : ForwardSlash RegexRules ForwardSlash
@@ -605,10 +606,6 @@ Lowest	Assignment	=, +=, -=, *=, /=, %=
   : '"' (lineStringContent | lineStringExpression)* '"'
   ;
   
-### multiLineStringLiteral (used by stringLiteral)
-  : '"""' (multiLineStringContent | multiLineStringExpression | '"')*
-    TRIPLE_QUOTE_CLOSE
-  ;
   
 ### lineStringContent (used by lineStringLiteral)
   : LineStrText

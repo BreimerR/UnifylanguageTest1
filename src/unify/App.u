@@ -17,6 +17,8 @@ class A{
 		$d = -F
 
 
+
+
 	}
 	// much bulky init
 	init2{

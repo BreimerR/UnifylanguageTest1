@@ -1,122 +1,226 @@
 import Parser from "../Parser";
-import Expression from "../../ast/statements/Expression";
 import AlternativeSection from "../sections/AlternativeSection";
+import AndOperatorParser from "../operators/AndOperatorParser";
 import OrOperatorParser from "./OrOperatorParser";
-import AndParser from "./AndParser";
-import Question from "../../tokens/characters/Question";
-import Colon from "../../tokens/characters/Colon";
-import ElvisOperatorParser from "./ElvisOperatorParser";
-import NumberParser from "./NumberParser";
-import StringParser from "./StringParser";
+import Identifier from "../../tokens/identifiers/Identifier";
 import BinaryOperatorParser from "./BinaryOperatorParser";
-import RBracket from "../../tokens/characters/RBracket";
+import ComparisonOperatorParser from "./ComparisonOperatorParser";
+import Equals from "../../tokens/characters/Equals";
 import LBracket from "../../tokens/characters/LBracket";
+import RBracket from "../../tokens/characters/RBracket";
 import RepetitiveBySection from "../sections/RepetitiveBySection";
 import Coma from "../../tokens/characters/Coma";
-
-
-export class OrExpressionParser extends Parser {
-
-}
-
-export class AndExpressionParser extends Parser {
-
-}
-
-export class BinaryExpressionParser extends Parser {
-
-}
-
-export class UrnaryExpressionParser extends Parser {
-
-}
-
-export class ElvisExpressionParser extends Parser {
-
-}
-
-export class GroupParser extends Parser {
-
-}
-
-// simpleReference
-// name argumentsDeclaration? (. simpleReference)*
-export class ReferenceParser extends Parser {
-}
-
+import StringParser from "./StringParser";
+import NumberParser from "./NumberParser";
+import OneOrManySection from "../sections/OneOrManySection";
+import OptionalSection from "../sections/OptionalSection";
+import AndParser from "../operators/AndParser";
+import ElvisOperatorParser from "./ElvisOperatorParser";
+import RepetitiveMinusParser from "./RepetitiveMinusParser";
+import RepetitivePlusParser from "./RepetitivePlusParser";
+import Exclamation from "../../tokens/characters/Exclamation";
+import Plus from "../../tokens/characters/Plus";
+import Asterisk from "../../tokens/characters/Asterisk";
+import Minus from "../../tokens/characters/Minus";
+import Dot from "../../tokens/characters/Dot";
+import ParseSection from "../sections/ParseSection";
+import RSBracket from "../../tokens/characters/RSBracket";
+import LSBracket from "../../tokens/characters/LSBracket";
+import Question from "../../tokens/characters/Question";
+import Colon from "../../tokens/characters/Colon";
 
 export default class ExpressionParser extends Parser {
+}
+
+export class InfixExpressionParser extends Parser {
 
 }
 
-export class ArgumentsParser extends Parser {
-
+export class InfixOperatorParser extends AlternativeSection {
+    constructor() {
+        super(
+            new AndParser,
+            new AndOperatorParser,
+            new OrOperatorParser,
+            new BinaryOperatorParser,
+            new ComparisonOperatorParser,
+            new ElvisOperatorParser,
+            Identifier,
+            Equals
+        )
+    }
 }
 
 
-/*
-* (age.getAge().getTime).shape || Age
-*
-*
-*
-*
-*
-* */
+export class FunctionCallParser extends Parser {
 
-OrExpressionParser.sections = [
-    new Expression,
-    new OrOperatorParser,
-    new Expression
+}
 
-];
+export class ArgumentsPassParser extends Parser {
 
-AndExpressionParser.sections = [
-    new Expression,
-    new AndParser,
-    new Expression
-];
+}
 
-UrnaryExpressionParser.sections = [
-    new Expression,
-    Question,
-    new Expression,
-    Colon,
-    new Expression
-];
+export class GroupExpressionParser extends Parser {
+}
 
-ElvisExpressionParser.sections = [
-    new Expression,
-    new ElvisOperatorParser,
-    new Expression
-];
+export class PrefixExpressionParser extends Parser {
+}
 
-GroupParser.sections = [
+export class PrefixOperatorParser extends AlternativeSection {
+    constructor() {
+        super(
+            new RepetitiveMinusParser,
+            new RepetitivePlusParser,
+            Identifier,
+            Asterisk,
+            Exclamation,
+            Plus,
+            Minus
+        );
+    }
+
+}
+
+export class PostFixOperatorParser extends AlternativeSection {
+    constructor() {
+        super(
+            new RepetitiveMinusParser,
+            new RepetitivePlusParser,
+        );
+    }
+
+}
+
+export class ChainFunctionCallParser extends Parser {
+}
+
+export class ReferenceExpressionParser extends Parser {
+
+}
+
+export class PostFixExpressionParser extends Parser {
+}
+
+export class UnaryExpressionParser extends Parser {
+}
+
+export class ThisReferenceParser extends Parser {
+
+}
+
+ArgumentsPassParser.sections = [
     LBracket,
-    new Expression,
-    RBracket
-];
-
-BinaryExpressionParser.sections = [
-    new Expression,
-    new BinaryOperatorParser,
-    new Expression
-];
-
-ReferenceParser.sections = [
-    LBracket,
-    new RepetitiveBySection(
-        Coma,
-        new Expression
+    new OptionalSection(
+        new RepetitiveBySection(
+            Coma,
+            new AlternativeSection(
+                new ExpressionParser,
+                new NumberParser,
+                new StringParser,
+                new ReferenceExpressionParser
+            )
+        )
     ),
     RBracket
 ];
 
+GroupExpressionParser.sections = [
+    LBracket,
+    new ExpressionParser,
+    RBracket
+];
 
-ExpressionParser.statement = Expression;
+FunctionCallParser.sections = [
+    Identifier,
+    new ArgumentsPassParser
+];
+
+
+let expressionStart = new AlternativeSection(
+    new FunctionCallParser,
+    Identifier,
+    new StringParser,
+    new NumberParser,
+    new GroupExpressionParser
+);
+
+InfixExpressionParser.sections = [
+    expressionStart,
+    new OneOrManySection(
+        new InfixOperatorParser,
+        new AlternativeSection(
+            new ExpressionParser,
+            expressionStart
+        )
+    )
+];
+
+PrefixExpressionParser.sections = [
+    new PrefixOperatorParser,
+    new AlternativeSection(
+        new InfixExpressionParser,
+        new PrefixExpressionParser,
+        new PostFixExpressionParser,
+        new FunctionCallParser,
+        new NumberParser,
+        Identifier,
+    )
+];
+
+PostFixExpressionParser.sections = [
+    expressionStart,
+    new PostFixOperatorParser
+];
+
+UnaryExpressionParser.sections = [
+    new AlternativeSection(
+        new InfixExpressionParser,
+        new PrefixExpressionParser,
+        new PostFixExpressionParser,
+        new FunctionCallParser,
+        new GroupExpressionParser,
+    ),
+    Question,
+    new ExpressionParser,
+    Colon,
+    new ExpressionParser
+];
+
+ThisReferenceParser.sections = [
+    new AlternativeSection(
+        "this",
+        "self",
+        "super"
+    ),
+    new AlternativeSection(
+        new ParseSection(
+            Dot,
+            new ReferenceExpressionParser
+        ),
+        new ParseSection(
+            LSBracket,
+            new ExpressionParser,
+            RSBracket
+        )
+    )
+];
+
+ReferenceExpressionParser.sections = [
+
+];
+
+ChainFunctionCallParser.sections = [
+
+];
+
 
 ExpressionParser.sections = [
     new AlternativeSection(
-        new NumberParser,
-        new StringParser,
+        new InfixExpressionParser,
+        new PrefixExpressionParser,
+        new PostFixExpressionParser,
+        new FunctionCallParser,
+        new UnaryExpressionParser,
+        new GroupExpressionParser,
     )
 ];
