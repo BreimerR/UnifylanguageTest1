@@ -45,7 +45,7 @@ import UnregisteredToken
 import Tokens from "./ast/Tokens"
 import DeclarationIdentifier
     from "./tokens/identifiers/DeclarationIdentifier";
-import TopLevelParser from "./parsers/statements/TopLevelParser";
+import TopLevelParser from "./parsers/TopLevelParser";
 
 
 //TODO

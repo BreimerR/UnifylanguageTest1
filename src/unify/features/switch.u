@@ -3,27 +3,31 @@
 * return? switch on infixFunction| default (==) {
 *
 * }
+switch lbracket? expression rbracket? defaultOperator {
+	(operator? expression (functionBody | simpleFunctionBody))*
+}
 
-* the example body provided my or may not have
+* the example body provided may or may not have
 * a body if it is in a single line expression
 * in such a case it would mean we have end of line deliminator
 * or we have a body start definition and end which could be the natural : and end ;
 *
 */
 
+
+class Green : Color(001100)
+
+
 class Parser{
-	makeSection(possibleSection){
-		switch possibleSection instanceOf {
-			Token {
+	makeSection(Parser|Token possibleSection){
+		$white = new Color(ffffff);
+		// TODO create hex number literal parser
+		$black = new Color(000000);
 
-			}
-			ParseSection {
 
-			}
+		do{
 
-			default {
-
-			}
-		}
+		}while(expression)
 	}
 }
+

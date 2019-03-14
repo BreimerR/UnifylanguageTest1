@@ -1,3 +1,5 @@
-class Bit :: DataType{
-	size =  1
+class Bit : DataType{
+	size  = 1
+
+
 }

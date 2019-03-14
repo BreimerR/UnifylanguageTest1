@@ -5,7 +5,9 @@ export default class OneOrManySection extends ParseSection {
         // test all section once if success test again for
         let {i} = tokens, c = 0;
 
+
         while (this.constructor.runTest(tokens, sections)) {
+            //console.log(tokens.currentToken)
             i = tokens.i;
             c++;
         }

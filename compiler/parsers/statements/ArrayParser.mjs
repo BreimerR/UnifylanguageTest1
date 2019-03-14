@@ -7,6 +7,7 @@ import ExpressionParser from "./ExpressionParser"
 import ZeroOrManySections from "../sections/ZeroOrManySections";
 import ArrayDeclaration from "../../ast/statements/ArrayDeclaration";
 
+
 export default class ArrayParser extends Parser {
 
 }
@@ -25,7 +26,8 @@ ArrayParser.sections = [
     new RepetitiveBySection(
         Coma,
         new ZeroOrManySections(
-            new ExpressionParser
+            new ExpressionParser,
+            new LiteralParser
         )
     ),
     RSBracket

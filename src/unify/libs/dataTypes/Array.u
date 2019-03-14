@@ -8,21 +8,16 @@ class Array<T>(Int|String length = simple()){
 	get smile{
 
 	}
-
-	prefix toString{
-
-	}
 }
 
 
-class String(Char...chars): Array<Char>{
+class String(Char...chars):: Array<Char>{
 
 }
 
-$s =  new String(... toCharArray 12)
+//$s =  new String(... toCharArray 12)
 
 
 smile(String smile){
-
-
+ Int a = new Int()
 }

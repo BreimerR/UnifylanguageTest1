@@ -6,7 +6,7 @@ import AdditiveExpressionParser
 import Dot from "../../tokens/characters/Dot";
 import RangeExpression from "../../ast/statements/RangeExpression";
 
-export default class RangeExpressionParser extends Parser {
+export  class RangeExpressionParser extends Parser {
 }
 
 RangeExpressionParser.statement = RangeExpression;

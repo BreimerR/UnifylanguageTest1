@@ -1,0 +1,4 @@
+// checks if a key is in a value
+infix in (Object a, Object b){
+
+}

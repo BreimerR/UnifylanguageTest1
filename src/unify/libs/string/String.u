@@ -1,5 +1,16 @@
 class String : Array<Char>{
-	prefix toString{
+	static infix in:Boolean(Char char, String string){
 
 	}
+
+	static infix in:Boolean(String s, String b){
+
+	}
+
+	/**TODO
+	* override static operator + {
+	*
+	* }
+	**/
 }
+

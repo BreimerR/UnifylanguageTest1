@@ -1,0 +1,53 @@
+abstract Language(protected String name){
+	shouldParse(Tokens tokens);
+
+
+}
+
+class Tokens(private String code) :: Iterable{
+
+	Boolean considerSpaces
+
+	private i = -1;
+
+	Boolean safe
+
+	init{
+		$tokens = Splitter.split(code)
+
+
+	}
+
+	get i{
+		return i
+	}
+
+	get hasValidToken:Boolean=> true
+
+	//TODO iterable must implement this method
+	iterate{
+
+	}
+
+	get hasRemTokens:Boolean => false;
+
+	get hasTokens:Boolean => true
+
+}
+
+
+class Unify(String code,String fileName) implements Language("Unify") {
+	Tokens tokens
+
+	init{
+		tokens = new Tokens(code)
+
+		parse()
+	}
+
+	parse{
+		$hasValidToken = tokens.hasValidToken
+
+
+	}
+}

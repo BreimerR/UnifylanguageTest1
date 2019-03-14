@@ -2,5 +2,23 @@ class Int{
 	// size is in 4 bytes
 	size =  4B
 
+	infix operator Plus{
 
+	}
+
+	infix operator Minus{
+
+	}
+
+	infix operator Divide{
+
+	}
+
+	override infix operator Multiply{
+
+	}
+
+	override infix operator Multiplication{
+
+	}
 }

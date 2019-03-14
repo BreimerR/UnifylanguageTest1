@@ -5,7 +5,6 @@ import Keyword from "../../tokens/identifiers/Keyword";
 export default class SimpleIdentifierParser extends NotSection {
     constructor() {
         super(Identifier, Keyword);
-
     }
 
 }

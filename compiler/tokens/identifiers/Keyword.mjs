@@ -33,5 +33,12 @@ Keyword.words = [
     "for",
     "if",
     "elif",
+    "aka",
     "else",
+    "get",
+    "set",
+    "switch",
+    "while",
+    "new",
+    "do"
 ];

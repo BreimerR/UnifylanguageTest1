@@ -1,8 +1,8 @@
 import AlternativeSection from "../sections/AlternativeSection";
 import PlusOperatorParser from "./PlusOperatorParser";
 import MinusOperatorParser from "./MinusOperatorParser";
-import AndOperatorParser from "../operators/AndOperatorParser";
-import SquareOperatorParser from "./SquareOperatorParser";
+import AndOperatorParser from "./AndOperatorParser";
+import SquareOperatorParser from "../statements/SquareOperatorParser";
 import ModulusOperatorParser from "./ModulusOperatorParser";
 import DivideOperatorParser from "./DivideOperatorParser";
 import MultiplicationOperatorParser

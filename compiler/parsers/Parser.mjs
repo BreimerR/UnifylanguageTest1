@@ -87,7 +87,10 @@ export default class Parser extends LanguageParser {
         } else if (tokens.hasValidToken) {
             if (typeof section === "string") {
                 bool = tokens.nextToken.validate(section);
-            } else bool = tokens.nextToken.is(section)
+            }else {
+
+                bool = tokens.nextToken.is(section)
+            }
         }
 
         return bool;

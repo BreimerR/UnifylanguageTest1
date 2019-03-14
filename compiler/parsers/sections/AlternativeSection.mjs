@@ -4,7 +4,6 @@ export default class AlternativeSection extends ParseSection {
     test(tokens) {
         let section = this.getSection(tokens);
 
-        //console.log(section);
         return section !== undefined;
     }
 
@@ -16,10 +15,14 @@ export default class AlternativeSection extends ParseSection {
 
             if (test) {
                 return section
-            } else  {
+            } else {
                 tokens.i = i
             }
         }
+
+    }
+
+    cleanSections() {
 
     }
 
