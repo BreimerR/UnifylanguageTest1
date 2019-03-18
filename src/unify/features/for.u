@@ -6,20 +6,84 @@ abstract Language(protected String name){
 
 class Tokens(private String code) :: Iterable{
 
-	Boolean considerSpaces
+	private considerSpaces = false;
 
-	private i = -1;
+	static $langTokens = [
+        		And,
+                    Asterisk,
+                    At,
+                    BackSlash,
+                    Colon,
+                    Coma,
+                    DExclamation,
+                    Dollar,
+                    Dot,
+                    Equals,
+                    Exclamation,
+                    ForwardSlash,
+                    GreaterThan,
+                    Hash,
+                    Identifier,
+                    DeclarationIdentifier,
+                    LBracket,
+                    LessThan,
+                    LSBracket,
+                    LSqBracket,
+                    Minus,
+                    NewLine,
+                    Percent,
+                    Pipe,
+                    Plus,
+                    Question,
+                    RBracket,
+                    RSBracket,
+                    RSqBracket,
+                    SColon,
+                    SingleExclamation,
+                    Tab,
+                    Space,
+                    SqLine,
+                    TExclamation,
+                    UCaret,
+                    Underscore,
+                    UnifyNumber
+        	]
 
-	Boolean safe
+    Class<Tokens>[] tokens = []
 
 	init{
 		$tokens = Splitter.split(code)
 
+		tokenize()
+	}
+
+	tokenize{
+
+		Unify.tokens.forEach(token => {
+			if (tk === undefined && token.test(tkString)) {
+				tk = new token(tkString);
+			}
+		});
+
+		if (tk instanceof Token) {
+			if (tk.is(NewLine)) {
+				line += row = 1 = 20
+			}
+
+			tk.row = row;
+			tk.line = line;
+
+
+		}
 
 	}
 
+	Boolean safe = 12;
+
 	get i{
-		return i
+		copy.considerSpaces =  false;
+
+		Int copy = false
 	}
 
 	get hasValidToken:Boolean=> true
@@ -29,11 +93,35 @@ class Tokens(private String code) :: Iterable{
 
 	}
 
-	get hasRemTokens:Boolean => false;
 
-	get hasTokens:Boolean => true
+  	each (function(Token,Int)=> Void) -> for i < tokens.length;i++ -> function(tokens[i],i)
+
+
+	get currentToken => tokens[i];
+
+	get nextToken {
+		this.i += 1;
+
+		if currentToken === undefined {
+			if this.safe => currentToken;
+
+			throw "Required token unavailable"
+		}
+	}
+
+
+	get hasTokens:Boolean => {
+	 	copy.considerSpaces =  true;
+	 	copy.safe = false
+
+	 	copy.nextToken !== undefined
+	}
+
+	 get hasRemTokens => this.i < this.tokens.length;
 
 }
+
+
 
 
 class Unify(String code,String fileName) implements Language("Unify") {
@@ -42,12 +130,34 @@ class Unify(String code,String fileName) implements Language("Unify") {
 	init{
 		tokens = new Tokens(code)
 
-		parse()
+		return parse()
 	}
 
 	parse{
-		$hasValidToken = tokens.hasValidToken
+		$hasValidToken = tokens.hasValidToken;
+
+		if !hasValidToken throw "Please pass code into the language"
+
+		while hasValidToken{
+			if ifUndefined parser throw new UnifySyntaxError(tokens.currentToken)
+
+			parser.parse(tokens,this)
+
+			hasValidToken = tokens.hasValidToken
+		}
+
+
+		log this.ast;
 
 
 	}
+
+	get parser{
+		for parser in parsers if parser shouldParse tokens => parser
+
+		throw new UnifySyntaxError(tokens.currentToken)
+	}
 }
+
+
+

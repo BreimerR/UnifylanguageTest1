@@ -1,0 +1,1 @@
+add(function(Int,Int)=>Int) => function(1,2);

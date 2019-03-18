@@ -1,7 +1,6 @@
 import Parser from "./Parser";
 import AbstractClassBody
     from "../ast/statements/AbstractClassBody";
-
 import AlternativeSection from "./sections/AlternativeSection";
 import ParseSection from "./sections/ParseSection";
 import LBracket from "../tokens/characters/LBracket";
@@ -83,14 +82,9 @@ import InfixOperatorParser from "./operators/InfixOperatorParser";
 import SelfParser from "./sections/SelfParser";
 import PostfixOperatorParser from "./operators/PostfixOperatorParser";
 import PrefixOperatorParser from "./operators/PrefixOperatorParser";
-import NegationOperatorParser
-    from "./operators/NegationOperatorParser";
 import OneOrManySection from "./sections/OneOrManySection";
-import Expression from "../ast/statements/Expression";
+
 import Minus from "../tokens/characters/Minus";
-import EqualityOperatorParser
-    from "./operators/EqualityOperatorParser";
-import Hash from "../tokens/characters/Hash";
 
 
 export class RegexEscapeCharacterParser extends Parser {
@@ -153,13 +147,16 @@ let akaSection = new OptionalSection(
         simpleName
     )
 );
-let returnType = new OptionalSection(
+let typeDeclarationParser = new TypeDeclarationParser,
+    anonymousFunctionReturnTypeSection =
+        new RepetitiveBySection(
+            Pipe,
+            typeDeclarationParser
+        ), returnType = new OptionalSection(
     Colon,
-    new RepetitiveBySection(
-        Pipe,
-        new TypeDeclarationParser()
-    )
-);
+    anonymousFunctionReturnTypeSection
+    );
+
 let functionThrowErrorSection = new OptionalSection(
     new AlternativeSection(
         new ParseSection(
@@ -394,6 +391,26 @@ export class FunctionBodiesParser extends AlternativeSection {
 
 }
 
+export class EndOfLineParser extends Parser {
+}
+
+
+export class FunctionArgumentParser extends Parser {
+
+}
+
+export class AnonymousFunctionParser extends Parser {
+
+}
+
+export class ObjectDestructionParser extends Parser {
+
+}
+
+export class ArrayDestructionParser extends Parser {
+
+}
+
 
 let args = new RepetitiveBySection(
     Coma,
@@ -409,7 +426,6 @@ let varyingArgs = new ParseSection(
         new DelegationParser
     )
     ), expressionParser = new ExpressionParser,
-    typeDeclarationParser = new TypeDeclarationParser,
     variableDeclarationParser = new VariableDeclarationParser,
     getterFunctionParser = new GetterFunctionParser,
     setterFunctionParse = new SetterFunctionParser,
@@ -420,7 +436,18 @@ let varyingArgs = new ParseSection(
     functionBodyParser = new FunctionBodyParser,
     switchCaseParser = new SwitchCaseParser,
     infixOperatorParser = new InfixOperatorParser,
-    functionBodiesParser = new FunctionBodiesParser;
+    functionBodiesParser = new FunctionBodiesParser,
+    endOfLineParser = new EndOfLineParser,
+    forParser = new ForLoopParser,
+    ifParser = new IfParser,
+    terminatedVariableDeclarationParser = new ParseSection(
+        variableDeclarationParser,
+        endOfLineParser
+    ),
+    argumentsParser = new ArgumentsParser,
+    anonymousFunctionParser = new AnonymousFunctionParser,
+    functionArgumentParser = new FunctionArgumentParser,
+    prefixExpressionParser = new PrefixExpressionParser;
 
 
 ReferenceParser.sections = [
@@ -493,7 +520,7 @@ let optional = new OptionalSection(
 optional.errors = [undefined, "Expecting at least one type declaration "];
 
 TypeDeclarationParser.sections = [
-    new SimpleIdentifierParser,
+    simpleName,
     optional,
     new OptionalSection(
         LSBracket,
@@ -672,7 +699,7 @@ ObjectBodyParser.sections = [
                     Colon,
                     new AlternativeSection(
                         new LiteralParser,
-                        new ExpressionParser
+                        expressionParser
                     )
                 ),
                 getterFunctionParser,
@@ -710,13 +737,16 @@ FunctionBodyParser.sections = [
     LSqBracket,
     new AlternativeZeroOrMany(
         new CommentParser,
-        new VariableDeclarationParser,
         new IfParser,
+        new WhileLoopParser,
+        new ForLoopParser,
+        new DoWhileLoopParser,
         switchCaseParser,
+        terminatedVariableDeclarationParser,
         new ParseSection(
             new AlternativeSection(
                 new ReferenceAssignmentParser,
-                new ExpressionParser
+                expressionParser
             ),
             new OptionalSection(
                 SColon
@@ -928,7 +958,7 @@ ClassExtensionParser.sections = [
             new RepetitiveBySection(
                 Coma,
                 new AlternativeSection(
-                    new ExpressionParser,
+                    expressionParser,
                     new LiteralParser
                 )
             )
@@ -944,6 +974,7 @@ ArgumentsPassingParser.sections = [
         new RepetitiveBySection(
             Coma,
             new AlternativeSection(
+                anonymousFunctionParser,
                 expressionParser,
                 new LiteralParser,
             )
@@ -966,7 +997,7 @@ ClassBodyParser.sections = [
                 new PrefixFunctionParser,
                 new FunctionParser,
                 new ObjectParser,
-                new VariableDeclarationParser,
+                terminatedVariableDeclarationParser,
                 new PropertyDeclarationParser
             )
         )
@@ -982,7 +1013,6 @@ AssignmentParser.sections = [
     new AlternativeSection(
         expressionParser,
         new RegexParser,
-        new ReferenceParser,
         new LiteralParser,
         new ObjectBodyParser
     )
@@ -1004,7 +1034,7 @@ ArrayParser.sections = [
         new RepetitiveBySection(
             Coma,
             new AlternativeZeroOrMany(
-                new ExpressionParser,
+                expressionParser,
                 new LiteralParser
             )
         )
@@ -1061,15 +1091,10 @@ ArgumentDeclarationParser.sections = [
     new AlternativeSection(
         functionArgument,
         variableDeclarationParser,
-        new AlternativeSection(
-            new ParseSection(
-                "this", Dot, new RepetitiveBySection(Dot, Identifier),
-                new AssignmentParser
-            ),
-            new ParseSection(
-                Identifier,
-                new AssignmentParser
-            )
+        new ParseSection(
+            new ReferenceParser,
+            // this covers this.identifier static reference assignments before use and just a simple object
+            new OptionalSection(new AssignmentParser)
         )
     )
 ];
@@ -1200,12 +1225,12 @@ AbstractClassBodyParser.sections = [
                                     new TypeDeclarationParser)
                             ),
                             LBracket,
-                            new VariableDeclarationParser,
+                            variableDeclarationParser,
                             RBracket,
                             new FunctionBodyParser
                         )
                     ),
-                    new VariableDeclarationParser,
+                    variableDeclarationParser,
                     new ParseSection(
                         "abstract",
                         new AlternativeSection(
@@ -1246,40 +1271,42 @@ AbstractClassBodyParser.sections = [
 
 GroupExpressionParser.sections = [
     LBracket,
-    new ExpressionParser,
+    expressionParser,
     RBracket
 ];
 
 PrefixExpressionParser.sections = [
-    new OptionalSection(
-        new NegationOperatorParser,
-    ),
     new PrefixOperatorParser,
     new AlternativeSection(
-        new ExpressionParser,
+        expressionParser,
         new LiteralParser
     )
 ];
 
 InfixExpressionParser.sections = [
     new ExpressionParser(
-        new PrefixExpressionParser,
+        prefixExpressionParser,
         new GroupExpressionParser,
         new PostfixExpressionParser(
-            new GroupExpressionParser,
-            new PrefixExpressionParser,
-            new LiteralParser,
+            new AlternativeSection(
+                new GroupExpressionParser,
+                prefixExpressionParser,
+                new LiteralParser
+            ),
+            new PostfixOperatorParser
         ),
         new LiteralParser,
     ),
     new OneOrManySection(
         new InfixOperatorParser,
         new AlternativeSection(
-            new ExpressionParser,
-            new LiteralParser
+            new RangeExpressionParser,
+            expressionParser,
+            new LiteralParser,
         )
     )
 ];
+
 
 PostfixExpressionParser.sections = [
     new AlternativeSection(
@@ -1320,7 +1347,7 @@ SimplifiedFunctionWithReturnParser.sections = [
     new AlternativeSection(
         new FunctionBodyParser,
         new AlternativeSection(
-            new ExpressionParser,
+            expressionParser,
             new LiteralParser
         )
     ),
@@ -1331,45 +1358,72 @@ SimplifiedFunctionParser.sections = [
     Minus,
     GreaterThan,
     new AlternativeSection(
-        new ExpressionParser,
-        new LiteralParser
+        forParser,
+        ifParser,
+        expressionParser,
     ),
     new OptionalSection(SColon)
 ];
 
+let ifBody = new AlternativeSection(
+    new FunctionBodyParser,
+    new SimplifiedFunctionWithReturnParser,
+    new SimplifiedFunctionParser,
+    new ParseSection(
+        expressionParser,
+        SColon
+    )
+);
+
+
+let ifTestSections = new AlternativeSection(
+    expressionParser,
+    new LiteralParser,
+    new ParseSection(
+        LBracket,
+        new AlternativeSection(
+            expressionParser,
+            new LiteralParser,
+        ),
+        RBracket
+    )
+);
 
 IfParser.sections = [
     "if",
-    new AlternativeSection(
-        new ExpressionParser,
-        new LiteralParser,
-        new ParseSection(
-            LBracket,
+    ifTestSections,
+    ifBody,
+    new OptionalSection(
+        new RepetitiveBySection(
             new AlternativeSection(
-                new ExpressionParser,
-                new LiteralParser,
+                "elif",
+                new ParseSection(
+                    "else", "if"
+                )
             ),
-            RBracket
+            new ParseSection(
+                ifTestSections,
+                ifBody
+            )
         )
     ),
-    new AlternativeSection(
-        new FunctionBodyParser,
-        new SimplifiedFunctionWithReturnParser,
-        new SimplifiedFunctionParser
+    new OptionalSection(
+        "else",
+        ifBody
     )
 ];
 
 RightSideExpressionParser.sections = [
     new InfixOperatorParser,
     new AlternativeSection(
-        new ExpressionParser,
+        expressionParser,
         new LiteralParser
     )
 ];
 
 LeftSideExpressionParser.sections = [
     new AlternativeSection(
-        new ExpressionParser,
+        expressionParser,
         new LiteralParser
     ),
     new InfixOperatorParser
@@ -1427,7 +1481,7 @@ DoWhileLoopParser.sections = [
         new ParseSection(
             LBracket,
             new AlternativeSection(
-                new ExpressionParser,
+                expressionParser,
                 new LiteralParser
             ),
             RBracket
@@ -1454,15 +1508,15 @@ WhileLoopParser.sections = [
 ];
 let forStart = new ParseSection(
     new OptionalSection(
-        variableDeclarationParser
+        variableDeclarationParser,
+        SColon,
     ),
-    SColon,
-    new ExpressionParser,
+    expressionParser,
     new OptionalSection(
         SColon,
         new RepetitiveBySection(
             Coma,
-            new ExpressionParser
+            expressionParser
         )
     )
 );
@@ -1477,5 +1531,69 @@ ForLoopParser.sections = [
             RBracket
         )
     ),
+    functionBodiesParser
+];
+
+FunctionArgumentParser.sections = [
+    Identifier,
+    new OptionalSection(
+        LBracket,
+        new RepetitiveBySection(
+            Coma,
+            new TypeDeclarationParser
+        ),
+        RBracket
+    ),
+    Equals,
+    GreaterThan,
+    new TypeDeclarationParser
+];
+
+EndOfLineParser.considerSpaces = true;
+EndOfLineParser.sections = [
+    new AlternativeZeroOrMany(
+        Space, Tab
+    ),
+    new AlternativeSection(
+        NewLine,
+        SColon
+    )
+];
+
+
+let anonymousFunctionFail = new AlternativeSection(
+    LSqBracket,
+    new ParseSection(
+        Equals,
+        GreaterThan
+    ),
+    new ParseSection(
+        Minus,
+        GreaterThan
+    )
+);
+
+
+let singleArgumentAnonymousFunctionStart = new ParseSection(
+    anonymousFunctionReturnTypeSection,
+    argumentDeclarationParser
+);
+
+let multipleArgumentAnonymousFunctionStart = new ParseSection(
+    new OptionalSection(
+        anonymousFunctionReturnTypeSection
+    ),
+    argumentsParser
+);
+
+
+// name(:returnType)arguments(:: throwSection) functionBody
+AnonymousFunctionParser.sections = [
+    new AlternativeSection(
+        singleArgumentAnonymousFunctionStart,
+        argumentDeclarationParser,
+        multipleArgumentAnonymousFunctionStart
+    ),
+    functionThrowErrorSection,
     functionBodiesParser
 ];

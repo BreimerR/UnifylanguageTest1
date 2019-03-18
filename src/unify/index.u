@@ -65,10 +65,10 @@ class Unify(String code,String fileName:/<name>[a-zA-Z]/)::Language{
 abstract Parser{
 	abstract Boolean considerSpaces
 
-	abstract Array<Parser|Token|String> sections:"da"
+	abstract Array<Parser|Token|String> sections:"da";
 
 	/*shouldParse (Tokens tokens,sections = self.sections)*/
-	shouldParse(Tokens tokens)
+	shouldParse(Tokens tokens);
 
 	static shouldParse(TokensCopy tokens){
 
@@ -92,5 +92,5 @@ closed class ClassBodyParser :: Parser {
 	 *  sections = ""
 	 */
 
-	 sections = ""
+
 }

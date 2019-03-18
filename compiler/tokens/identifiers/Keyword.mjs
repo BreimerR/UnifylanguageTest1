@@ -1,19 +1,18 @@
 import Identifier from "./Identifier"
 
 export default class Keyword extends Identifier {
-    testToken(token) {
-        return this.constructor.testToken(token)
-    }
-
-
     static testToken(token) {
-        let {words} =  this;
+        let {words} = this;
         for (let i in words) {
             let word = words[i];
-            if(token.token === word)  return true;
+            if (token.token === word) return true;
         }
 
         return false;
+    }
+
+    testToken(token) {
+        return this.constructor.testToken(token)
     }
 }
 
@@ -40,5 +39,8 @@ Keyword.words = [
     "switch",
     "while",
     "new",
+    "return",
+    "throw",
+    "import",
     "do"
 ];

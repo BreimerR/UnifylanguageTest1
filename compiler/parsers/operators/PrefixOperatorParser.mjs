@@ -11,34 +11,14 @@ import ParseSection from "../sections/ParseSection";
 
 export default class PrefixOperatorParser extends AlternativeSection {
     constructor() {
-        let start = new AlternativeSection(
-            Exclamation
-        );
         super(
-            new ParseSection(
-                new OptionalSection(start),
-                new RepetitivePlusParser
-            ),
-            new ParseSection(
-                new OptionalSection(start),
-                new RepetitiveMinusParser
-            ),
-            new ParseSection(
-                new OptionalSection(start),
-                new PlusOperatorParser
-            ),
-            new ParseSection(
-                new OptionalSection(start),
-                new NegationOperatorParser
-            ),
-            new ParseSection(
-                new OptionalSection(start),
-                new MinusOperatorParser
-            ),
-            new ParseSection(
-                new OptionalSection(start),
-                new ReferenceParser
-            ),
+            new RepetitivePlusParser,
+            new RepetitiveMinusParser,
+            new PlusOperatorParser,
+            new NegationOperatorParser,
+            new MinusOperatorParser,
+            new ReferenceParser,
+
         )
     }
 }

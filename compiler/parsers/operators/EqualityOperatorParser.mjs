@@ -17,11 +17,10 @@ export default class EqualityOperatorParser extends AlternativeSection {
             new GreaterThanOrEqualToParser,
             new GreaterThanParser,
             new LessThanParser,
+            new NotExactlyEqualsParser,
             new NotEqualParser,
             new ExactlyEqualsParser,
             new EqualsToParser,
-            new NotExactlyEqualsParser,
-            new NotEqualsParser,
         )
     }
 }

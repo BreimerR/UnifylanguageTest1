@@ -15,23 +15,40 @@ import {
     SwitchCaseParser,
     WhileLoopParser,
     DoWhileLoopParser,
-    ForLoopParser
+    ForLoopParser, FunctionCallParser, ExpressionParser
 } from "./Parsers";
 import OptionalSection from "./sections/OptionalSection";
 import SColon from "../tokens/characters/SColon";
+import Parser from "./Parser";
 
 
 // the main parser should contain all the sections possible in the file
 export default class TopLevelParser extends ParseSection {
     // noinspection JSCheckFunctionSignatures
     static parse(tokens, lang, {sections} = this) {
+        let parsed = [];
+        for (let i in sections) {
+            let section = sections[i];
 
+            if (section instanceof Parser){
+                parsed.push(section.parse(tokens))
+            }else parsed.push(tokens.nextToken)
+        }
+
+        return parsed;
+    }
+
+    static shouldParse(tokens, sections = this.constructor.testSections) {
+        let test = super.shouldParse(tokens, sections);
+        console.log(this.parse(tokens));
+        return test;
     }
 }
 
 TopLevelParser.sections = [
     new AlternativeZeroOrMany(
         new CommentParser,
+        new ExpressionParser,
         new VariableDeclarationParser,
         new ObjectParser,
         new ClassParser,
@@ -42,14 +59,15 @@ TopLevelParser.sections = [
                 SColon
             )
         ),
-        new FunctionParser,
         new IfParser,
+        new FunctionCallParser,
         new DoWhileLoopParser,
         new WhileLoopParser,
         new ForLoopParser,
         new SwitchCaseParser,
         new InfixFunctionParser,
-        new PrefixFunctionParser
+        new PrefixFunctionParser,
+        new FunctionParser,
     ),
     EndOfFile
 ];
