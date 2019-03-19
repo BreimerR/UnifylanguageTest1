@@ -1,3 +1,5 @@
-if a {
-
-}
+// if a parser passes threshold sections
+// start parsing
+// then if it fails to parse
+// throw error of unexpected token
+// and state what is expected from that section

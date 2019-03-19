@@ -85,6 +85,7 @@ import PrefixOperatorParser from "./operators/PrefixOperatorParser";
 import OneOrManySection from "./sections/OneOrManySection";
 
 import Minus from "../tokens/characters/Minus";
+import ReferenceStatement from "../ast/statements/ReferenceStatement";
 
 
 export class RegexEscapeCharacterParser extends Parser {
@@ -345,6 +346,7 @@ export class ExpressionParser extends AlternativeSection {
     }
 }
 
+
 export class ReferenceParser extends Parser {
 
 }
@@ -451,14 +453,13 @@ let varyingArgs = new ParseSection(
 
 
 ReferenceParser.sections = [
-    new AlternativeSection(
-        new RepetitiveBySection(
-            Dot,
-            Identifier
-        ),
+    new RepetitiveBySection(
+        Dot,
         Identifier
     )
 ];
+
+ReferenceParser.statement = ReferenceStatement;
 
 VariableDeclarationParser.statement = VariableDeclaration;
 
@@ -517,7 +518,7 @@ let optional = new OptionalSection(
     GreaterThan
 );
 
-optional.errors = [undefined, "Expecting at least one type declaration "];
+optional.errors = [undefined, "Expecting at least one type declaration"];
 
 TypeDeclarationParser.sections = [
     simpleName,
@@ -1306,7 +1307,6 @@ InfixExpressionParser.sections = [
         )
     )
 ];
-
 
 PostfixExpressionParser.sections = [
     new AlternativeSection(

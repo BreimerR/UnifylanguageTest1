@@ -8,6 +8,7 @@ class A{
 
 		$url: ["Home","index"] validateUrlArr, actionOnValidationFailure = Url.parse $_GET.url
 
+
 		$controller = Controller.exists url.0 ? new url.0() : new Home()
 
 		$view:"index" validateView,actionOnViewValidateFail = url.1

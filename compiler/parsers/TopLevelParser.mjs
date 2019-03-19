@@ -30,25 +30,18 @@ export default class TopLevelParser extends ParseSection {
         for (let i in sections) {
             let section = sections[i];
 
-            if (section instanceof Parser){
+            if (section instanceof Parser) {
                 parsed.push(section.parse(tokens))
-            }else parsed.push(tokens.nextToken)
+            } else parsed.push(tokens.nextToken)
         }
 
         return parsed;
-    }
-
-    static shouldParse(tokens, sections = this.constructor.testSections) {
-        let test = super.shouldParse(tokens, sections);
-        console.log(this.parse(tokens));
-        return test;
     }
 }
 
 TopLevelParser.sections = [
     new AlternativeZeroOrMany(
         new CommentParser,
-        new ExpressionParser,
         new VariableDeclarationParser,
         new ObjectParser,
         new ClassParser,
@@ -68,6 +61,7 @@ TopLevelParser.sections = [
         new InfixFunctionParser,
         new PrefixFunctionParser,
         new FunctionParser,
+        new ExpressionParser,
     ),
     EndOfFile
 ];
